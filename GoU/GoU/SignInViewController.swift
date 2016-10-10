@@ -40,8 +40,8 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func didTapSignUp(_ sender: AnyObject) {
-        //guard let email = emailField.text, let password = passwordField.text else { return }
-        FIRAuth.auth()?.createUser(withEmail: "email@aa.com", password: "password") { (user, error) in
+        guard let email = emailField.text, let password = passwordField.text else { return }
+        FIRAuth.auth()?.createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {
                 self.showAlert(message: error.localizedDescription)
                 print(error.localizedDescription)
