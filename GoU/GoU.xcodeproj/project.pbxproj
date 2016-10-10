@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		172E72F11DAAED8B0024BBD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 172E72F01DAAED8B0024BBD2 /* GoogleService-Info.plist */; };
+		172E72F31DAB13EE0024BBD2 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E72F21DAB13EE0024BBD2 /* SignInViewController.swift */; };
+		172E72F51DAB16D00024BBD2 /* MeasurementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E72F41DAB16D00024BBD2 /* MeasurementHelper.swift */; };
+		172E72F71DAB170B0024BBD2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E72F61DAB170B0024BBD2 /* AppState.swift */; };
 		17D1802B1DA4B02A00735567 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1802A1DA4B02A00735567 /* AppDelegate.swift */; };
 		17D1802D1DA4B02A00735567 /* PassengerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1802C1DA4B02A00735567 /* PassengerViewController.swift */; };
 		17D1802F1DA4B02A00735567 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1802E1DA4B02A00735567 /* ProfileViewController.swift */; };
 		17D180321DA4B02A00735567 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D180301DA4B02A00735567 /* Main.storyboard */; };
 		17D180341DA4B02A00735567 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D180331DA4B02A00735567 /* Assets.xcassets */; };
 		17D180371DA4B02A00735567 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D180351DA4B02A00735567 /* LaunchScreen.storyboard */; };
+		17D1803F1DA57D6600735567 /* driverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1803E1DA57D6600735567 /* driverViewController.swift */; };
+		327F1E670B4241841C412612 /* Pods_GoU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5AC56202FEF12C90648384 /* Pods_GoU.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7C8BDBA0DC83B3AD38947E /* Pods-GoU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoU.release.xcconfig"; path = "../Pods/Target Support Files/Pods-GoU/Pods-GoU.release.xcconfig"; sourceTree = "<group>"; };
+		172E72F01DAAED8B0024BBD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		172E72F21DAB13EE0024BBD2 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		172E72F41DAB16D00024BBD2 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
+		172E72F61DAB170B0024BBD2 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		17D180271DA4B02A00735567 /* GoU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D1802A1DA4B02A00735567 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17D1802C1DA4B02A00735567 /* PassengerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +35,9 @@
 		17D180331DA4B02A00735567 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17D180361DA4B02A00735567 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17D180381DA4B02A00735567 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17D1803E1DA57D6600735567 /* driverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = driverViewController.swift; sourceTree = "<group>"; };
+		BC5AC56202FEF12C90648384 /* Pods_GoU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-GoU/Pods-GoU.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327F1E670B4241841C412612 /* Pods_GoU.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +55,11 @@
 		17D1801E1DA4B02A00735567 = {
 			isa = PBXGroup;
 			children = (
+				172E72F01DAAED8B0024BBD2 /* GoogleService-Info.plist */,
 				17D180291DA4B02A00735567 /* GoU */,
 				17D180281DA4B02A00735567 /* Products */,
+				6D9BAA17C27072D1D69EA784 /* Pods */,
+				DE9BA8798FBD8F279EC6B3F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +81,29 @@
 				17D180331DA4B02A00735567 /* Assets.xcassets */,
 				17D180351DA4B02A00735567 /* LaunchScreen.storyboard */,
 				17D180381DA4B02A00735567 /* Info.plist */,
+				17D1803E1DA57D6600735567 /* driverViewController.swift */,
+				172E72F21DAB13EE0024BBD2 /* SignInViewController.swift */,
+				172E72F41DAB16D00024BBD2 /* MeasurementHelper.swift */,
+				172E72F61DAB170B0024BBD2 /* AppState.swift */,
 			);
 			path = GoU;
+			sourceTree = "<group>";
+		};
+		6D9BAA17C27072D1D69EA784 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */,
+				0A7C8BDBA0DC83B3AD38947E /* Pods-GoU.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DE9BA8798FBD8F279EC6B3F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BC5AC56202FEF12C90648384 /* Pods_GoU.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +113,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17D1803B1DA4B02A00735567 /* Build configuration list for PBXNativeTarget "GoU" */;
 			buildPhases = (
+				92DA6F30D76B164A9DDD4B06 /* [CP] Check Pods Manifest.lock */,
 				17D180231DA4B02A00735567 /* Sources */,
 				17D180241DA4B02A00735567 /* Frameworks */,
 				17D180251DA4B02A00735567 /* Resources */,
+				7B810E8713626DEE37736605 /* [CP] Embed Pods Frameworks */,
+				147AE323E1D7A4E0C11DEF4E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17D180371DA4B02A00735567 /* LaunchScreen.storyboard in Resources */,
+				172E72F11DAAED8B0024BBD2 /* GoogleService-Info.plist in Resources */,
 				17D180341DA4B02A00735567 /* Assets.xcassets in Resources */,
 				17D180321DA4B02A00735567 /* Main.storyboard in Resources */,
 			);
@@ -134,13 +177,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		147AE323E1D7A4E0C11DEF4E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GoU/Pods-GoU-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B810E8713626DEE37736605 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GoU/Pods-GoU-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92DA6F30D76B164A9DDD4B06 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		17D180231DA4B02A00735567 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D1803F1DA57D6600735567 /* driverViewController.swift in Sources */,
 				17D1802F1DA4B02A00735567 /* ProfileViewController.swift in Sources */,
+				172E72F71DAB170B0024BBD2 /* AppState.swift in Sources */,
+				172E72F51DAB16D00024BBD2 /* MeasurementHelper.swift in Sources */,
 				17D1802B1DA4B02A00735567 /* AppDelegate.swift in Sources */,
+				172E72F31DAB13EE0024BBD2 /* SignInViewController.swift in Sources */,
 				17D1802D1DA4B02A00735567 /* PassengerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +357,7 @@
 		};
 		17D1803C1DA4B02A00735567 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GoU/Info.plist;
@@ -274,6 +370,7 @@
 		};
 		17D1803D1DA4B02A00735567 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A7C8BDBA0DC83B3AD38947E /* Pods-GoU.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GoU/Info.plist;
@@ -303,6 +400,7 @@
 				17D1803D1DA4B02A00735567 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
