@@ -9,6 +9,30 @@
 import UIKit
 import Firebase
 
+struct Trip {
+    var from: String
+    var to: String
+    var date: String
+    var seats: String
+    init(from: String, to: String, date: String, seats: String) {
+        self.from = from
+        self.to = to
+        self.date = date
+        self.seats = seats
+    }
+    mutating func setNew(from: String, to: String, date: String, seats: String) {
+        self.from = from
+        self.to = to
+        self.date = date
+        self.seats = seats
+    }
+}
+
+var trip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3")
+
+
+var trips = [Trip]()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
