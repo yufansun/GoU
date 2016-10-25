@@ -79,7 +79,7 @@ struct CommonProfile {
     var majorField: [String] //TODO: make it a enum
     var languages: [String] //TODO: make it a enum
     //TODO: more habit information
-    
+    // TODO: add experience, trip (list of index)
 
     init(lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
         self.lastName = lastName

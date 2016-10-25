@@ -25,18 +25,17 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var email = ""
+        var name = ""
+        var uid = ""
         if let user = FIRAuth.auth()?.currentUser {
-            var name = user.displayName
-            email = user.email!
+            name = user.displayName!
+            var email = user.email
             var photoUrl = user.photoURL
-            var uid = user.uid;  // The user's ID, unique to the Firebase project.
+            uid = user.uid;  // The user's ID, unique to the Firebase project.
         } else {
             // No user is signed in.
         }
-        print(email)
-        var myStr = "hah"
-        usernameLabel.text = email
+        usernameLabel.text = name
         
     }
 
@@ -61,11 +60,16 @@ class ProfileViewController: UIViewController {
             phoneTextField.text! == "" || currentCountryTextField.text! == "" || currentStateTextField.text! == "" || currentCityTextField.text! == "") {
             showAlert()
         } else {
+
             let contactInfo = ContactInformation.init(emailAddress: "test.umich.edu", phoneNumber: phoneTextField.text!)
             let firstName = firstnameTextField.text!
             let lastName = lastNameTextField.text!
+            
             let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
             CommonProfile.init(lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
+            
+            //TODO: update profile in database
+            
             
             let alert = UIAlertController(title: "Thank You",
                                           message: "User information updated sucessfully", preferredStyle: .alert)
