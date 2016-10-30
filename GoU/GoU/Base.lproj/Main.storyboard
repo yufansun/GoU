@@ -15,7 +15,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oB3-FZ-sCo">
@@ -141,11 +141,11 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2W-gf-PXC">
-                                <frame key="frameInset" minX="279" minY="28" width="80" height="30"/>
+                                <frame key="frameInset" minX="264" minY="565" width="90" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Save"/>
+                                <state key="normal" title="Confirm"/>
                                 <connections>
                                     <action selector="didTapSave:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Ho4-uw-Cix"/>
                                 </connections>
@@ -153,7 +153,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" tag="-3" title="Profile" image="Profile" id="cPa-gy-q4n">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-60" vertical="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="currentCityTextField" destination="Wst-59-f2M" id="iO0-vb-iFJ"/>
                         <outlet property="currentCountryTextField" destination="rVd-Vt-bV0" id="WWf-9T-1ya"/>
@@ -234,7 +236,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="69l-pS-5yY" firstAttribute="leading" secondItem="pYm-lY-QRu" secondAttribute="leading" id="29v-f3-BZr"/>
                             <constraint firstItem="PZP-72-dwb" firstAttribute="centerX" secondItem="1Sy-eF-MeG" secondAttribute="centerX" id="Fti-Ru-fkB"/>
@@ -267,8 +269,7 @@
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" itemPositioning="centered" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -316,7 +317,9 @@
                             <outlet property="delegate" destination="94A-d7-vuA" id="Z2o-lY-uGZ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Browse" image="car" id="DOU-Nt-sg4"/>
+                    <tabBarItem key="tabBarItem" title="Browse" image="car" id="DOU-Nt-sg4">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="40" vertical="0.0"/>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dth-Yw-qvR" userLabel="First Responder" sceneMemberID="firstResponder"/>
