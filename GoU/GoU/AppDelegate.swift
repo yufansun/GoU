@@ -72,21 +72,21 @@ struct ContactInformation {
 struct DriverProfile {
     var licenseNumber: String
     var drivingYears: String
-    var vehicleInfo: VehicleInfo
+    var vehicleInfo: VehicleInformation
     
-    init(licenseNumber: String, drivingYears: String, vehicleInfo: VehicleInfo) {
+    init(licenseNumber: String, drivingYears: String, vehicleInfo: VehicleInformation) {
         self.licenseNumber = licenseNumber
         self.drivingYears = drivingYears
         self.vehicleInfo = vehicleInfo
     }
-    mutating func setNew(licenseNumber: String, drivingYears: String) {
+    mutating func setNew(licenseNumber: String, drivingYears: String, vehicleInfo: VehicleInformation) {
         self.licenseNumber = licenseNumber
         self.drivingYears = drivingYears
         self.vehicleInfo = vehicleInfo
     }
 }
 
-struct VehicleInfo {
+struct VehicleInformation {
     var make: String
     var year: String
     //var photo
@@ -114,7 +114,7 @@ struct CommonProfile {
     var schoolName: String //TODO: make it a enum
     var majorField: [String] //TODO: make it a enum
     var languages: [String] //TODO: make it a enum
-    var driverProfile: DriverProfile
+    var driverPro: DriverProfile?
     //TODO: more habit information
     // TODO: add experience, trip (list of index)
 
@@ -132,6 +132,7 @@ struct CommonProfile {
         self.majorField = majorField
         self.languages = languages
     }
+    
     mutating func setNew(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
         self.userId = userid
         self.lastName = lastName
@@ -145,6 +146,10 @@ struct CommonProfile {
         self.schoolName = schoolName
         self.majorField = majorField
         self.languages = languages
+    }
+    
+    mutating func setDriverProfile(driverPro: DriverProfile) {
+        self.driverPro = driverPro
     }
 }
 
