@@ -55,6 +55,10 @@ struct ContactInformation {
     var emailAddress: String
     var phoneNumber: String
     
+    func getEmail() -> String {
+        return self.emailAddress
+    }
+    
     init(emailAddress: String, phoneNumber: String) {
         self.emailAddress = emailAddress
         self.phoneNumber = phoneNumber
@@ -65,8 +69,40 @@ struct ContactInformation {
     }
 }
 
+struct DriverProfile {
+    var licenseNumber: String
+    var drivingYears: String
+    var vehicleInfo: VehicleInfo
+    
+    init(licenseNumber: String, drivingYears: String, vehicleInfo: VehicleInfo) {
+        self.licenseNumber = licenseNumber
+        self.drivingYears = drivingYears
+        self.vehicleInfo = vehicleInfo
+    }
+    mutating func setNew(licenseNumber: String, drivingYears: String) {
+        self.licenseNumber = licenseNumber
+        self.drivingYears = drivingYears
+        self.vehicleInfo = vehicleInfo
+    }
+}
+
+struct VehicleInfo {
+    var make: String
+    var year: String
+    //var photo
+    init(make: String, year: String) {
+        self.make = make
+        self.year = year
+    }
+    
+    mutating func setNew(make: String, year: String) {
+        self.make = make
+        self.year = year
+    }
+}
 
 struct CommonProfile {
+    var userId: String
     var lastName: String
     var firstName: String
     var gender: String //TODO: make it a enum
@@ -78,10 +114,12 @@ struct CommonProfile {
     var schoolName: String //TODO: make it a enum
     var majorField: [String] //TODO: make it a enum
     var languages: [String] //TODO: make it a enum
+    var driverProfile: DriverProfile
     //TODO: more habit information
     // TODO: add experience, trip (list of index)
 
-    init(lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+    init(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+        self.userId = userid
         self.lastName = lastName
         self.firstName = firstName
         self.gender = gender
@@ -94,7 +132,8 @@ struct CommonProfile {
         self.majorField = majorField
         self.languages = languages
     }
-    mutating func setNew(lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+    mutating func setNew(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+        self.userId = userid
         self.lastName = lastName
         self.firstName = firstName
         self.gender = gender
@@ -119,7 +158,7 @@ var majors = ["CS", "EE"]
 var lan = ["English", "Chinese"]
 
 
-var sampleProfile = CommonProfile(lastName: "Li", firstName: "Chenhao", gender: "Male", birthDate: "02/21/1995", contactInfo: contactInfo, currentLocation: loc, homeLocation: loc, aboutMe: "GoU is the best", schoolName: "University of Michigan", majorField: majors, languages: lan)
+var sampleProfile = CommonProfile(userid: "lchenhao@umich.edu", lastName: "Li", firstName: "Chenhao", gender: "Male", birthDate: "02/21/1995", contactInfo: contactInfo, currentLocation: loc, homeLocation: loc, aboutMe: "GoU is the best", schoolName: "University of Michigan", majorField: majors, languages: lan)
 
 
 @UIApplicationMain

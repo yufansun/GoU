@@ -1,0 +1,86 @@
+{
+  "commonProfiles" : {
+    "-K2ib4H77rj0LYewF7dP" : {
+      "userId": "test0@umich.edu",
+      "lastName": "Last0",
+      "firstName": "First0",
+      "gender": "Male",
+      "birthDate": "1995/01/01",
+      "contactInfo": {
+        "emailAddress": "test0@umich.edu",
+        "phoneNumber": "7347800000"
+      },
+      "currentLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "homeLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "aboutMe": "I am test0",
+      "schoolName": "University of Michigan",
+      "majorField": ["CS", "EE"],
+      "languages": ["English", "Chinese"],
+      "driverProfile": {}
+    },
+    "-K2ib5JHRbbL0NrztUfO" : {
+      "userId": "test1@umich.edu",
+      "lastName": "Last1",
+      "firstName": "First1",
+      "gender": "Male",
+      "birthDate": "1995/01/02",
+      "contactInfo": {
+        "emailAddress": "test1@umich.edu",
+        "phoneNumber": "7347800001"
+      },
+      "currentLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "homeLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "aboutMe": "I am test1",
+      "schoolName": "University of Michigan",
+      "majorField": ["CS", "EE"],
+      "languages": ["English", "Chinese"],
+      "driverProfile": {}
+    },
+    "-K2ib62mjHh34CAUbide" : {
+      "userId": "test2@umich.edu",
+      "lastName": "Last2",
+      "firstName": "First2",
+      "gender": "Female",
+      "birthDate": "1995/01/03",
+      "contactInfo": {
+        "emailAddress": "test2@umich.edu",
+        "phoneNumber": "7347800000"
+      },
+      "currentLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "homeLocation": {
+        "countryName": "US",
+        "stateName": "Michigan",
+        "cityName": "Ann Arbor"
+      },
+      "aboutMe": "I am test2",
+      "schoolName": "University of Michigan",
+      "majorField": ["CS", "EE"],
+      "languages": ["English", "Chinese"],
+      "driverProfile": {}
+    }
+  },
+
+  "tripInfo": {
+
+  }
+}

@@ -6,8 +6,11 @@
 //  Copyright © 2016 SunYufan. All rights reserved.
 //
 
+import Photos
 import UIKit
+
 import Firebase
+import GoogleMobileAds
 
 class ProfileViewController: UIViewController {
     @IBOutlet weak var firstnameTextField: UITextField!
@@ -20,11 +23,23 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var currentCityTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
     // MARK: Properties
+    var ref: FIRDatabaseReference!
+    var messages: [FIRDataSnapshot]! = []
+    var msglength: NSNumber = 10
+    fileprivate var _refHandle: FIRDatabaseHandle!
     
+    var storageRef: FIRStorageReference!
+    var remoteConfig: FIRRemoteConfig!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        configureDatabase()
+        configureStorage()
+        configureRemoteConfig()
+        fetchConfig()
+        loadAd()
+        logViewLoaded()
         var name = ""
         var uid = ""
         if let user = FIRAuth.auth()?.currentUser {
@@ -55,20 +70,54 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func didTapSave(_ sender: AnyObject) {
-        if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
-            phoneTextField.text! == "" || currentCountryTextField.text! == "" || currentStateTextField.text! == "" || currentCityTextField.text! == "") {
-            showAlert()
-        } else {
+    deinit {
+        self.ref.child("messages").removeObserver(withHandle: _refHandle)
+    }
+    
+    func configureDatabase() {
+        ref = FIRDatabase.database().reference()
+        // Listen for new messages in the Firebase database
+//        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
+//            guard let strongSelf = self else { return }
+//            strongSelf.messages.append(snapshot)
+//            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
+//            })
+    }
+    
+    func configureStorage() {
+        storageRef = FIRStorage.storage().reference(forURL: "gs://gou-app-94faa.appspot.com")
+    }
+    
+    func configureRemoteConfig() {
+    }
+    
+    func fetchConfig() {
+    }
 
-            let contactInfo = ContactInformation.init(emailAddress: "test.umich.edu", phoneNumber: phoneTextField.text!)
-            let firstName = firstnameTextField.text!
-            let lastName = lastNameTextField.text!
-            
-            let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
-            CommonProfile.init(lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
-            
+    func logViewLoaded() {
+    }
+    
+    func loadAd() {
+    }
+    
+    @IBAction func didTapSave(_ sender: AnyObject) {
+//        if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
+//            phoneTextField.text! == "" || currentCountryTextField.text! == "" || currentStateTextField.text! == "" || currentCityTextField.text! == "") {
+//            showAlert()
+//        } else {
+//
+//            let contactInfo = ContactInformation.init(emailAddress: "test.umich.edu", phoneNumber: phoneTextField.text!)
+//            let firstName = firstnameTextField.text!
+//            let lastName = lastNameTextField.text!
+//            
+//            let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
+//            
+//            CommonProfile.init(userid: "test.umich.edu",lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
+        
             //TODO: update profile in database
+            var data = [Constants.MessageFields.text: "lchenhao"]
+            sendMessage(withData: data)
+            
             
             
             let alert = UIAlertController(title: "Thank You",
@@ -76,8 +125,18 @@ class ProfileViewController: UIViewController {
             let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-        }
+        //}
         
+    }
+    
+    func sendMessage(withData data: [String: String]) {
+        var mdata = data
+        mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
+        if let photoURL = AppState.sharedInstance.photoURL {
+            mdata[Constants.MessageFields.photoURL] = photoURL.absoluteString
+        }
+        // Push data to Firebase Database
+        self.ref.child("messages").childByAutoId().setValue(mdata)
     }
     
     func showAlert() {
