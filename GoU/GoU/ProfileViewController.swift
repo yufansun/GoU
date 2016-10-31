@@ -121,8 +121,6 @@ class ProfileViewController: UIViewController {
     func logViewLoaded() {
     }
     
-    func loadAd() {
-    }
     
     @IBAction func didTapSave(_ sender: AnyObject) {
         if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
@@ -134,6 +132,8 @@ class ProfileViewController: UIViewController {
             let firstName = firstnameTextField.text!
             let lastName = lastNameTextField.text!
             let gender = genderTextField.text!
+            let major = majorTextField.text!
+            let aboutMe = aboutMeTextField.text!
             
             let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
             
@@ -148,11 +148,9 @@ class ProfileViewController: UIViewController {
             data[Constants.CommonProfileFields.lastName] = lastName
             data[Constants.CommonProfileFields.gender] = gender
             data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
-            data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
-            
+            data[Constants.CommonProfileFields.majorField] = major
+            data[Constants.CommonProfileFields.aboutMe] = aboutMe
             sendMessage(withData: data)
-            
-            
             
             let alert = UIAlertController(title: "Thank You",
                                           message: "User information updated sucessfully", preferredStyle: .alert)
