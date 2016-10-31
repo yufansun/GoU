@@ -83,7 +83,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
         //TODO: fetch user profile to local variable if already has profile
@@ -150,6 +149,9 @@ class ProfileViewController: UIViewController {
             data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
             data[Constants.CommonProfileFields.majorField] = major
             data[Constants.CommonProfileFields.aboutMe] = aboutMe
+            data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
+            data[Constants.CommonProfileFields.saved] = "TRUE"
+            
             sendMessage(withData: data)
             
             let alert = UIAlertController(title: "Thank You",
@@ -164,7 +166,7 @@ class ProfileViewController: UIViewController {
     func sendMessage(withData data: [String: String]) {
         var mdata = data
         // Push data to Firebase Database
-        self.ref.child("commonProfiles").childByAutoId().setValue(mdata)
+        self.ref.child("commonProfiles").child(uid).setValue(mdata)
     }
     
     func showAlert() {

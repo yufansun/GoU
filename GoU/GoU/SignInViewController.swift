@@ -16,6 +16,14 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    var ref: FIRDatabaseReference!
+    var messages: [FIRDataSnapshot]! = []
+    var msglength: NSNumber = 10
+    fileprivate var _refHandle: FIRDatabaseHandle!
+    
+    var storageRef: FIRStorageReference!
+    var remoteConfig: FIRRemoteConfig!
+    var uid: String = ""
     
     override func viewDidAppear(_ animated: Bool) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -48,13 +56,29 @@ class SignInViewController: UIViewController {
                 return
             }
             self.setDisplayName(user!)
-            var p  = ProfileViewController()
-            p.configureDatabase()
-            p.configureStorage()
+
+            //create initial profile
+            self.uid = user!.uid
+            self.configureDatabase()
+            self.configureStorage()
             var data = [Constants.CommonProfileFields.userId: user!.uid]
-            data["saved"] = "FALSE"
-            p.sendMessage(withData: data)
+            data[Constants.CommonProfileFields.saved] = "FALSE"
+            self.sendMessage(withData: data)
         }
+    }
+    
+    func configureDatabase() {
+        ref = FIRDatabase.database().reference()
+    }
+    
+    func configureStorage() {
+        storageRef = FIRStorage.storage().reference(forURL: "gs://gou-app-94faa.appspot.com")
+    }
+    
+    func sendMessage(withData data: [String: String]) {
+        var mdata = data
+        // Push data to Firebase Database
+        self.ref.child("commonProfiles").child(uid).setValue(mdata)
     }
     
     func setDisplayName(_ user: FIRUser) {
