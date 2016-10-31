@@ -92,19 +92,7 @@ class ProfileViewController: UIViewController {
         //            strongSelf.messages.append(snapshot)
         //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
         //            })
-        let postRef = ref.child("commonProfile")
-        print(postRef)
-        
-        let query = postRef.queryEqual(toValue: "Male", childKey: "gender")
-        print(query)
-        
-        //let postRef = ref.child("tripInfo")
-        //let query = postRef.queryEqual(toValue: "test", childKey: "name")
-        print("~~~~~~~~~~~~")
-        query.observe(.value, with: { (snapshot) -> Void in
-            print(snapshot)
-        })
-        print("<<<<<<<<<<<<<")
+
     }
     
     func configureStorage() {
