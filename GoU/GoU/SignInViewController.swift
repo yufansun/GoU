@@ -56,6 +56,7 @@ class SignInViewController: UIViewController {
                 return
             }
             self.setDisplayName(user!)
+
             //create initial profile
             self.uid = user!.uid
             self.configureDatabase()

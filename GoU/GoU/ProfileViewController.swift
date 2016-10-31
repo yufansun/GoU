@@ -20,7 +20,13 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var currentCountryTextField: UITextField!
     @IBOutlet weak var currentStateTextField: UITextField!
     @IBOutlet weak var currentCityTextField: UITextField!
+    @IBOutlet weak var majorTextField: UITextField!
+    @IBOutlet weak var languageFirstTextField: UITextField!
+    
+    @IBOutlet weak var aboutMeTextField: UITextView!
+    @IBOutlet weak var languageSecondTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     // MARK: Properties
     var ref: FIRDatabaseReference!
     var messages: [FIRDataSnapshot]! = []
@@ -33,6 +39,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // make the view scrollable
+        scrollView = UIScrollView(frame: view.bounds)
+        //var cellViewFrame: UIView?
+        //cellViewFrame = UIView(frame: CGRect( x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height + 120))
+        //scrollView.contentSize = (cellViewFrame?.bounds.size)!
+        
         // Do any additional setup after loading the view, typically from a nib.
         configureDatabase()
         configureStorage()
@@ -40,16 +52,19 @@ class ProfileViewController: UIViewController {
         fetchConfig()
         logViewLoaded()
         var name = ""
+        var email = ""
         if let user = FIRAuth.auth()?.currentUser {
             name = user.displayName!
-            var email = user.email
+            email = user.email!
             var photoUrl = user.photoURL
             uid = user.uid;  // The user's ID, unique to the Firebase project.
         } else {
             // No user is signed in.
         }
         usernameLabel.text = name
+        emailTextField.text = email
         
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,10 +83,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-//    deinit {
-//        self.ref.child("commonProfiles").removeObserver(withHandle: _refHandle)
-//    }
-    
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
         //TODO: fetch user profile to local variable if already has profile
@@ -81,6 +92,19 @@ class ProfileViewController: UIViewController {
         //            strongSelf.messages.append(snapshot)
         //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
         //            })
+        let postRef = ref.child("commonProfile")
+        print(postRef)
+        
+        let query = postRef.queryEqual(toValue: "Male", childKey: "gender")
+        print(query)
+        
+        //let postRef = ref.child("tripInfo")
+        //let query = postRef.queryEqual(toValue: "test", childKey: "name")
+        print("~~~~~~~~~~~~")
+        query.observe(.value, with: { (snapshot) -> Void in
+            print(snapshot)
+        })
+        print("<<<<<<<<<<<<<")
     }
     
     func configureStorage() {
