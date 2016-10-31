@@ -64,7 +64,26 @@ class ProfileViewController: UIViewController {
         usernameLabel.text = name
         emailTextField.text = email
         
-
+        ref.child("commonProfiles").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            self.firstnameTextField.text = value?["firstName"] as! String
+            self.lastNameTextField.text = value?["lastName"] as! String
+            self.genderTextField.text = value?["gender"] as! String
+            self.emailTextField.text = value?["emailAddress"] as! String
+            self.phoneTextField.text = value?["phoneNumber"] as! String
+            self.currentCountryTextField.text = value?["currentCountryName"] as! String
+            self.currentStateTextField.text = value?["currentStateName"] as! String
+            self.currentCityTextField.text = value?["currentCityName"] as! String
+            self.majorTextField.text = value?["majorField"] as! String
+            self.aboutMeTextField.text = value?["aboutMe"] as! String
+            let phoneNumber = value?["phoneNumber"] as! String
+            print("&&&&&&&&")
+            print(phoneNumber)
+            // ...
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,26 +104,6 @@ class ProfileViewController: UIViewController {
     
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
-        //TODO: fetch user profile to local variable if already has profile
-        // Listen for new messages in the Firebase database
-        //        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
-        //            guard let strongSelf = self else { return }
-        //            strongSelf.messages.append(snapshot)
-        //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-        //            })
-        let postRef = ref.child("commonProfile")
-        print(postRef)
-        
-        let query = postRef.queryEqual(toValue: "Male", childKey: "gender")
-        print(query)
-        
-        //let postRef = ref.child("tripInfo")
-        //let query = postRef.queryEqual(toValue: "test", childKey: "name")
-        print("~~~~~~~~~~~~")
-        query.observe(.value, with: { (snapshot) -> Void in
-            print(snapshot)
-        })
-        print("<<<<<<<<<<<<<")
     }
     
     func configureStorage() {
