@@ -106,6 +106,14 @@ class ProfileViewController: UIViewController {
     
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
+        //TODO: fetch user profile to local variable if already has profile
+        // Listen for new messages in the Firebase database
+        //        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
+        //            guard let strongSelf = self else { return }
+        //            strongSelf.messages.append(snapshot)
+        //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
+        //            })
+
     }
     
     func configureStorage() {
