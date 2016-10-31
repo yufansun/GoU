@@ -13,10 +13,6 @@ struct Constants {
         static let SignedIn = "onSignInCompleted"
     }
     
-    struct Segues {
-        static let SignInToFp = "SignInToFP"
-        static let FpToSignIn = "FPToSignIn"
-    }
     
     struct CommonProfileFields {
         static let userId = "userId"
@@ -39,6 +35,8 @@ struct Constants {
         static let homeCountryName = "homeCountryName"
         static let homeStateName = "homeStateName"
         static let homeCityName = "homeCityName"
+        static let saved = "saved"
+
     }
     
     struct MessageFields {

@@ -48,6 +48,12 @@ class SignInViewController: UIViewController {
                 return
             }
             self.setDisplayName(user!)
+            var p  = ProfileViewController()
+            p.configureDatabase()
+            p.configureStorage()
+            var data = [Constants.CommonProfileFields.userId: user!.uid]
+            data["saved"] = "FALSE"
+            p.sendMessage(withData: data)
         }
     }
     
