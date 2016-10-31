@@ -64,7 +64,26 @@ class ProfileViewController: UIViewController {
         usernameLabel.text = name
         emailTextField.text = email
         
-
+        ref.child("commonProfiles").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            self.firstnameTextField.text = value?["firstName"] as! String
+            self.lastNameTextField.text = value?["lastName"] as! String
+            self.genderTextField.text = value?["gender"] as! String
+            self.emailTextField.text = value?["emailAddress"] as! String
+            self.phoneTextField.text = value?["phoneNumber"] as! String
+            self.currentCountryTextField.text = value?["currentCountryName"] as! String
+            self.currentStateTextField.text = value?["currentStateName"] as! String
+            self.currentCityTextField.text = value?["currentCityName"] as! String
+            self.majorTextField.text = value?["majorField"] as! String
+            self.aboutMeTextField.text = value?["aboutMe"] as! String
+            let phoneNumber = value?["phoneNumber"] as! String
+            print("&&&&&&&&")
+            print(phoneNumber)
+            // ...
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     override func didReceiveMemoryWarning() {
