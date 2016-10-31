@@ -11,25 +11,38 @@ import Firebase
 import Foundation
 
 struct Trip {
-    var from: String
+    var from: String //TO DO: Make it a location
     var to: String
-    var date: String
+    var date: String //TO DO: Make it a date
     var seats: String
-    init(from: String, to: String, date: String, seats: String) {
+    var ownerID: String
+    var tripID: String
+    var notes: String
+    
+    
+    init(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String) {
         self.from = from
         self.to = to
         self.date = date
         self.seats = seats
+        self.ownerID = ownerID
+        self.tripID = tripID
+        self.notes = notes
     }
-    mutating func setNew(from: String, to: String, date: String, seats: String) {
+    mutating func setNew(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String) {
         self.from = from
         self.to = to
         self.date = date
         self.seats = seats
+        self.ownerID = ownerID
+        self.tripID = tripID
+        self.notes = notes
     }
 }
 
-var trip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3")
+var trip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "")
+
+var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "")
 
 
 var trips = [Trip]()
