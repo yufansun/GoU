@@ -10,7 +10,6 @@ import Photos
 import UIKit
 
 import Firebase
-import GoogleMobileAds
 
 class ProfileViewController: UIViewController {
     @IBOutlet weak var firstnameTextField: UITextField!
@@ -30,7 +29,8 @@ class ProfileViewController: UIViewController {
     
     var storageRef: FIRStorageReference!
     var remoteConfig: FIRRemoteConfig!
-
+    var uid: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -38,10 +38,8 @@ class ProfileViewController: UIViewController {
         configureStorage()
         configureRemoteConfig()
         fetchConfig()
-        loadAd()
         logViewLoaded()
         var name = ""
-        var uid = ""
         if let user = FIRAuth.auth()?.currentUser {
             name = user.displayName!
             var email = user.email
@@ -53,7 +51,7 @@ class ProfileViewController: UIViewController {
         usernameLabel.text = name
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -71,17 +69,18 @@ class ProfileViewController: UIViewController {
     }
     
     deinit {
-        self.ref.child("messages").removeObserver(withHandle: _refHandle)
+        self.ref.child("commonProfiles").removeObserver(withHandle: _refHandle)
     }
     
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
+        //TODO: fetch user profile to local variable if already has profile
         // Listen for new messages in the Firebase database
-//        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
-//            guard let strongSelf = self else { return }
-//            strongSelf.messages.append(snapshot)
-//            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-//            })
+        //        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
+        //            guard let strongSelf = self else { return }
+        //            strongSelf.messages.append(snapshot)
+        //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
+        //            })
     }
     
     func configureStorage() {
@@ -93,7 +92,7 @@ class ProfileViewController: UIViewController {
     
     func fetchConfig() {
     }
-
+    
     func logViewLoaded() {
     }
     
@@ -101,21 +100,31 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func didTapSave(_ sender: AnyObject) {
-//        if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
-//            phoneTextField.text! == "" || currentCountryTextField.text! == "" || currentStateTextField.text! == "" || currentCityTextField.text! == "") {
-//            showAlert()
-//        } else {
-//
-//            let contactInfo = ContactInformation.init(emailAddress: "test.umich.edu", phoneNumber: phoneTextField.text!)
-//            let firstName = firstnameTextField.text!
-//            let lastName = lastNameTextField.text!
-//            
-//            let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
-//            
-//            CommonProfile.init(userid: "test.umich.edu",lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
-        
-            //TODO: update profile in database
-            var data = [Constants.MessageFields.text: "lchenhao"]
+        if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
+            phoneTextField.text! == "" || currentCountryTextField.text! == "" || currentStateTextField.text! == "" || currentCityTextField.text! == "" || genderTextField.text! == "" || emailTextField.text! == "") {
+            showAlert()
+        } else {
+            
+            let contactInfo = ContactInformation.init(emailAddress: emailTextField.text!, phoneNumber: phoneTextField.text!)
+            let firstName = firstnameTextField.text!
+            let lastName = lastNameTextField.text!
+            let gender = genderTextField.text!
+            
+            let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
+            
+            //            CommonProfile.init(userid: "test.umich.edu",lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
+            
+            //update profile in database
+            var data = [Constants.CommonProfileFields.userId: uid]
+            data[Constants.CommonProfileFields.currentCountryName] = currentLocation.countryName
+            data[Constants.CommonProfileFields.currentStateName] = currentLocation.stateName
+            data[Constants.CommonProfileFields.currentCityName] = currentLocation.cityName
+            data[Constants.CommonProfileFields.firstName] = firstName
+            data[Constants.CommonProfileFields.lastName] = lastName
+            data[Constants.CommonProfileFields.gender] = gender
+            data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
+            data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
+            
             sendMessage(withData: data)
             
             
@@ -125,18 +134,14 @@ class ProfileViewController: UIViewController {
             let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-        //}
+        }
         
     }
     
     func sendMessage(withData data: [String: String]) {
         var mdata = data
-        mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
-        if let photoURL = AppState.sharedInstance.photoURL {
-            mdata[Constants.MessageFields.photoURL] = photoURL.absoluteString
-        }
         // Push data to Firebase Database
-        self.ref.child("messages").childByAutoId().setValue(mdata)
+        self.ref.child("commonProfiles").childByAutoId().setValue(mdata)
     }
     
     func showAlert() {

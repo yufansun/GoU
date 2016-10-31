@@ -22,7 +22,7 @@ struct Constants {
         static let userId = "userId"
         static let lastName = "lastName"
         static let firstName = "firstName"
-        static let gender = "genger"
+        static let gender = "gender"
         static let birthDate = "birthDate"
         static let contactInfo = "contactInfo"
         static let currentLocation = "currentLocation"
@@ -31,6 +31,14 @@ struct Constants {
         static let schoolName = "schoolName"
         static let majorField = "majorField"
         static let languages = "languages"
+        static let emailAddress = "emailAddress"
+        static let phoneNumber = "phoneNumber"
+        static let currentCountryName = "currentCountryName"
+        static let currentStateName = "currentStateName"
+        static let currentCityName = "currentCityName"
+        static let homeCountryName = "homeCountryName"
+        static let homeStateName = "homeStateName"
+        static let homeCityName = "homeCityName"
     }
     
     struct MessageFields {

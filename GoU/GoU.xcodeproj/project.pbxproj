@@ -119,7 +119,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17D1803B1DA4B02A00735567 /* Build configuration list for PBXNativeTarget "GoU" */;
 			buildPhases = (
-				2CF28ACE4345E31288A64A18 /* 📦 Check Pods Manifest.lock */,
+				2CF28ACE4345E31288A64A18 /* [CP] Check Pods Manifest.lock */,
 				92DA6F30D76B164A9DDD4B06 /* [CP] Check Pods Manifest.lock */,
 				17D180231DA4B02A00735567 /* Sources */,
 				17D180241DA4B02A00735567 /* Frameworks */,
@@ -217,14 +217,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GoU/Pods-GoU-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2CF28ACE4345E31288A64A18 /* 📦 Check Pods Manifest.lock */ = {
+		2CF28ACE4345E31288A64A18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
