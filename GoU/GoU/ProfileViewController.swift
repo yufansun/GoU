@@ -68,9 +68,9 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    deinit {
-        self.ref.child("commonProfiles").removeObserver(withHandle: _refHandle)
-    }
+//    deinit {
+//        self.ref.child("commonProfiles").removeObserver(withHandle: _refHandle)
+//    }
     
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
@@ -124,6 +124,7 @@ class ProfileViewController: UIViewController {
             data[Constants.CommonProfileFields.gender] = gender
             data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
             data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
+            data[Constants.CommonProfileFields.saved] = "TRUE"
             
             sendMessage(withData: data)
             
@@ -141,7 +142,7 @@ class ProfileViewController: UIViewController {
     func sendMessage(withData data: [String: String]) {
         var mdata = data
         // Push data to Firebase Database
-        self.ref.child("commonProfiles").childByAutoId().setValue(mdata)
+        self.ref.child("commonProfiles").child(uid).setValue(mdata)
     }
     
     func showAlert() {
