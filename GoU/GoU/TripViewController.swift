@@ -18,6 +18,7 @@ class TripViewController: UIViewController {
     @IBOutlet weak var notesTextField: UITextField!
     
     var ref: FIRDatabaseReference!
+    var rootRef: FIRDatabaseReference!
     var posts: [FIRDataSnapshot]! = []
     var msglength: NSNumber = 10
     fileprivate var _refHandle: FIRDatabaseHandle!
@@ -86,6 +87,25 @@ class TripViewController: UIViewController {
                 print(error.localizedDescription)
             }
             
+            //chenhao's code
+            //Note: I use the postKey here!!!
+            self.rootRef = FIRDatabase.database().reference()
+            
+            var postList = ""
+            let userID = FIRAuth.auth()?.currentUser?.uid
+            rootRef.child("commonProfiles").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? NSDictionary
+                postList = value?[Constants.CommonProfileFields.myPostsList] as! String
+                print("in database postlist is " + postList)
+                postList = postList + postKey + ","
+                print("after postlist is " + postList)
+                var path = "commonProfiles/" + userID! + "/myPostsList"
+                self.rootRef.child(path).setValue(postList)
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+            //end
             
             let alert = UIAlertController(title: "Thank You",
                                           message: "Create sucessfully", preferredStyle: .alert)

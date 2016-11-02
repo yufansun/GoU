@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  GoU
 //
-//  Created by SunYufan on 10/4/16.
+//  Created by SunYufan  and Chenhao Li on 10/4/16.
 //  Copyright © 2016 SunYufan. All rights reserved.
 //
 
@@ -129,10 +129,13 @@ struct CommonProfile {
     var majorField: [String] //TODO: make it a enum
     var languages: [String] //TODO: make it a enum
     var driverPro: DriverProfile?
+    var isDriver: String
+    var myPostsList: String?
+    var myRequestsList: String?
     //TODO: more habit information
     // TODO: add experience, trip (list of index)
     
-    init(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+    init(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String], isDriver: String) {
         self.userId = userid
         self.lastName = lastName
         self.firstName = firstName
@@ -145,9 +148,10 @@ struct CommonProfile {
         self.schoolName = schoolName
         self.majorField = majorField
         self.languages = languages
+        self.isDriver = isDriver
     }
     
-    mutating func setNew(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String]) {
+    mutating func setNew(userid: String, lastName: String, firstName: String, gender: String, birthDate: String, contactInfo: ContactInformation, currentLocation: Location, homeLocation: Location, aboutMe: String, schoolName: String, majorField: [String], languages: [String], isDriver: String) {
         self.userId = userid
         self.lastName = lastName
         self.firstName = firstName
@@ -160,6 +164,7 @@ struct CommonProfile {
         self.schoolName = schoolName
         self.majorField = majorField
         self.languages = languages
+        self.isDriver = isDriver
     }
     
     mutating func setDriverProfile(driverPro: DriverProfile) {
@@ -177,7 +182,7 @@ var majors = ["CS", "EE"]
 var lan = ["English", "Chinese"]
 
 
-var sampleProfile = CommonProfile(userid: "lchenhao@umich.edu", lastName: "Li", firstName: "Chenhao", gender: "Male", birthDate: "02/21/1995", contactInfo: contactInfo, currentLocation: loc, homeLocation: loc, aboutMe: "GoU is the best", schoolName: "University of Michigan", majorField: majors, languages: lan)
+var sampleProfile = CommonProfile(userid: "lchenhao@umich.edu", lastName: "Li", firstName: "Chenhao", gender: "Male", birthDate: "02/21/1995", contactInfo: contactInfo, currentLocation: loc, homeLocation: loc, aboutMe: "GoU is the best", schoolName: "University of Michigan", majorField: majors, languages: lan, isDriver: "FALSE")
 
 
 @UIApplicationMain

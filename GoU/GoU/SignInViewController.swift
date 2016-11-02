@@ -12,7 +12,7 @@ import Firebase
 
 @objc(SignInViewController)
 class SignInViewController: UIViewController {
-
+    
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
@@ -56,13 +56,15 @@ class SignInViewController: UIViewController {
                 return
             }
             self.setDisplayName(user!)
-
+            
             //create initial profile
             self.uid = user!.uid
             self.configureDatabase()
             self.configureStorage()
             var data = [Constants.CommonProfileFields.userId: user!.uid]
             data[Constants.CommonProfileFields.saved] = "FALSE"
+            data[Constants.CommonProfileFields.myPostsList] = ""
+            data[Constants.CommonProfileFields.myRequestsList] = ""
             self.sendMessage(withData: data)
         }
     }

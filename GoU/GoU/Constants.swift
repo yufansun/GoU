@@ -36,6 +36,9 @@ struct Constants {
         static let homeStateName = "homeStateName"
         static let homeCityName = "homeCityName"
         static let saved = "saved"
+        static let isDriver = "isDriver"
+        static let myPostsList =  "myPostsList"
+        static let myRequestsList = "myRequestsList"
     }
     
     struct MessageFields {

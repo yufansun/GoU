@@ -2,7 +2,7 @@
 //  ProfileViewController.swift
 //  GoU
 //
-//  Created by SunYufan on 10/4/16.
+//  Created by SunYufan and Chenhao Li on 10/4/16.
 //  Copyright © 2016 SunYufan. All rights reserved.
 //
 
@@ -113,7 +113,7 @@ class ProfileViewController: UIViewController {
         //            strongSelf.messages.append(snapshot)
         //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
         //            })
-
+        
     }
     
     func configureStorage() {
@@ -145,23 +145,36 @@ class ProfileViewController: UIViewController {
             
             let currentLocation = Location.init(countryName: currentCountryTextField.text! , stateName: currentStateTextField.text!, cityName: currentCityTextField.text!)
             
-            //            CommonProfile.init(userid: "test.umich.edu",lastName: lastName, firstName: firstName, gender: "female", birthDate: "01/01/1995", contactInfo: contactInfo, currentLocation: currentLocation, homeLocation: currentLocation, aboutMe: "aboutMe", schoolName: "UMich", majorField: ["Computer Science"], languages: ["Chinese","English"])
+            var postList = ""
+            var requestList = ""
+            ref.child("commonProfiles").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? NSDictionary
+                postList = value?[Constants.CommonProfileFields.myPostsList] as! String
+                requestList = value?[Constants.CommonProfileFields.myRequestsList] as! String
+                //update profile in database
+                var data = [Constants.CommonProfileFields.userId: self.uid]
+                data[Constants.CommonProfileFields.currentCountryName] = currentLocation.countryName
+                data[Constants.CommonProfileFields.currentStateName] = currentLocation.stateName
+                data[Constants.CommonProfileFields.currentCityName] = currentLocation.cityName
+                data[Constants.CommonProfileFields.firstName] = firstName
+                data[Constants.CommonProfileFields.lastName] = lastName
+                data[Constants.CommonProfileFields.gender] = gender
+                data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
+                data[Constants.CommonProfileFields.majorField] = major
+                data[Constants.CommonProfileFields.aboutMe] = aboutMe
+                data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
+                data[Constants.CommonProfileFields.saved] = "TRUE"
+                data[Constants.CommonProfileFields.myPostsList] = postList
+                data[Constants.CommonProfileFields.myRequestsList] = requestList
+                data[Constants.CommonProfileFields.isDriver] = "FALSE"//TODO: JUST FOR NOW
+                
+                self.sendMessage(withData: data)
+            }) { (error) in
+                print(error.localizedDescription)
+            }
             
-            //update profile in database
-            var data = [Constants.CommonProfileFields.userId: uid]
-            data[Constants.CommonProfileFields.currentCountryName] = currentLocation.countryName
-            data[Constants.CommonProfileFields.currentStateName] = currentLocation.stateName
-            data[Constants.CommonProfileFields.currentCityName] = currentLocation.cityName
-            data[Constants.CommonProfileFields.firstName] = firstName
-            data[Constants.CommonProfileFields.lastName] = lastName
-            data[Constants.CommonProfileFields.gender] = gender
-            data[Constants.CommonProfileFields.phoneNumber] = contactInfo.phoneNumber
-            data[Constants.CommonProfileFields.majorField] = major
-            data[Constants.CommonProfileFields.aboutMe] = aboutMe
-            data[Constants.CommonProfileFields.emailAddress] = contactInfo.emailAddress
-            data[Constants.CommonProfileFields.saved] = "TRUE"
             
-            sendMessage(withData: data)
             
             let alert = UIAlertController(title: "Thank You",
                                           message: "User information updated sucessfully", preferredStyle: .alert)
