@@ -25,6 +25,7 @@ class TripViewController: UIViewController {
     var storageRef: FIRStorageReference!
     var remoteConfig: FIRRemoteConfig!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,7 +46,9 @@ class TripViewController: UIViewController {
     
     
     @IBAction func submitTrip(_ sender: UIButton) {
-        let userID = FIRAuth.auth()?.currentUser?.uid
+        let userID = (FIRAuth.auth()?.currentUser?.uid)! as String
+        
+    
         
         if ((fromTextField.text?.isEmpty)! || (toTextField.text?.isEmpty)! ||
             (dateTextField.text?.isEmpty)! || (seatsTextField.text?.isEmpty)! ||
@@ -61,6 +64,7 @@ class TripViewController: UIViewController {
             //            trip.date = dateTextField.text!
             //            trip.seats = seatsTextField.text!
             //            trips.append(trip)
+
             
             
             let postKey = ref.child("posts").childByAutoId().key as String
@@ -68,7 +72,8 @@ class TripViewController: UIViewController {
                                                              "to": toTextField.text!,
                                                              "date": dateTextField.text!,
                                                              "seats": seatsTextField.text!,
-                                                             "notes": notesTextField.text!
+                                                             "notes": notesTextField.text!,
+                                                             "ownerID": userID
                 ])
             
             self.ref.child("posts").observe(.childAdded, with: { (snapshot) in

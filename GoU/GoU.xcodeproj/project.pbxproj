@@ -153,6 +153,7 @@
 				TargetAttributes = {
 					17D180261DA4B02A00735567 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = BBRCWABZFX;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -420,9 +421,10 @@
 			baseConfigurationReference = DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BBRCWABZFX;
 				INFOPLIST_FILE = GoU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Yufan.GoU;
+				PRODUCT_BUNDLE_IDENTIFIER = Jiaqi.GoU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -433,9 +435,10 @@
 			baseConfigurationReference = 0A7C8BDBA0DC83B3AD38947E /* Pods-GoU.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BBRCWABZFX;
 				INFOPLIST_FILE = GoU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Yufan.GoU;
+				PRODUCT_BUNDLE_IDENTIFIER = Jiaqi.GoU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

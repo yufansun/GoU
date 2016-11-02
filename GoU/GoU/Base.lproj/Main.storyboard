@@ -379,7 +379,7 @@
                                 <rect key="frame" x="0.0" y="108" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XhC-GO-4yR" id="bhb-r2-mzN">
-                                    <frame key="frameInset" width="342" height="64"/>
+                                    <frame key="frameInset" width="342" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -401,7 +401,7 @@
             </objects>
             <point key="canvasLocation" x="1575" y="-460"/>
         </scene>
-        <!--Trip Detail View Controller-->
+        <!--Browse-->
         <scene sceneID="WsA-mA-FXe">
             <objects>
                 <viewController id="I81-to-IQV" customClass="TripDetailViewController" customModule="GoU" customModuleProvider="target" sceneMemberID="viewController">
@@ -436,14 +436,14 @@
                                     <action selector="submit:" destination="I81-to-IQV" eventType="touchUpInside" id="yOv-on-AVi"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJE-sX-vp8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJE-sX-vp8">
                                 <frame key="frameInset" minX="44" minY="76" width="294" height="345"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="From Shanghai To Beijing">
                                         <attributes>
                                             <font key="NSFont" metaFont="system" size="18"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="2" tighteningFactorForTruncation="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="4" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -457,6 +457,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Browse" image="car" id="PUo-zd-r47">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-50" vertical="0.0"/>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="info" destination="RJE-sX-vp8" id="jcg-CQ-HKB"/>
                         <outlet property="match" destination="ExB-Zb-Dzk" id="4xE-av-DFt"/>
@@ -464,7 +468,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51v-xd-gE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2248.8000000000002" y="-335.08245877061472"/>
+            <point key="canvasLocation" x="3298" y="-460"/>
         </scene>
         <!--Trip View Controller-->
         <scene sceneID="Zd5-KZ-nJS">
@@ -583,7 +587,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XkU-Yo-60l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1464.8" y="358.4707646176912"/>
+            <point key="canvasLocation" x="2465" y="-504"/>
         </scene>
     </scenes>
     <resources>

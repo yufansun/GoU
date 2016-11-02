@@ -26,6 +26,7 @@ class TripDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.setNeedsDisplay()
         
 /*
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
@@ -44,9 +45,12 @@ class TripDetailViewController: UIViewController {
 
         
         
+        
         tempTrip = tripViewing
+        
+        
         self.info.text = "Waiting......"
-        self.showInfo()
+        showInfo()
         
         
         // Do any additional setup after loading the view.
@@ -74,6 +78,7 @@ class TripDetailViewController: UIViewController {
             + tempTrip.seats + " seats available\n"
             + "Driver's notes: " + tempTrip.notes + "\n"
             + "Provided by " + tempTrip.ownerID + "\n"
+        self.view.setNeedsDisplay()
     }
     
     

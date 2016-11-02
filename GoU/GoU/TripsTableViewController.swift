@@ -34,13 +34,15 @@ class TripsTableViewController: UITableViewController {
             trip.seats = value!["seats"]! as! String
             trip.notes = value!["notes"]! as! String
             trip.tripID = key as! String
+            trip.ownerID = value!["ownerID"]! as! String
             
-            
+/*
             if let user = FIRAuth.auth()?.currentUser {
                 trip.ownerID = user.uid;  // The user's ID, unique to the Firebase project.
             } else {
                 // No user is signed in.
             }
+*/
             
             debugPrint(trip.ownerID)
             // TODO: DO linear search?
@@ -119,7 +121,6 @@ class TripsTableViewController: UITableViewController {
         //TO DO: Check the ordering
         
         tripViewing = trips[indexPath.row]
-        print(tripViewing.ownerID)
         
         NSLog(tripViewing.ownerID)
     }
