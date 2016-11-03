@@ -20,6 +20,7 @@
 		17D1803F1DA57D6600735567 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1803E1DA57D6600735567 /* TripViewController.swift */; };
 		327F1E670B4241841C412612 /* Pods_GoU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5AC56202FEF12C90648384 /* Pods_GoU.framework */; };
 		663B742A1DB6CAB3006ABACD /* TripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */; };
+		663CC1E81DCB93C600662B20 /* MyTripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */; };
 		66685BC41DC706C000BF35BF /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66685BC31DC706C000BF35BF /* TripDetailViewController.swift */; };
 		83CA04081DC65C77000562FA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA04071DC65C77000562FA /* Constants.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		17D180381DA4B02A00735567 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17D1803E1DA57D6600735567 /* TripViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsTableViewController.swift; sourceTree = "<group>"; };
+		663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTripsTableViewController.swift; sourceTree = "<group>"; };
 		66685BC31DC706C000BF35BF /* TripDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
 		83CA04071DC65C77000562FA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BC5AC56202FEF12C90648384 /* Pods_GoU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +88,7 @@
 				83CA04071DC65C77000562FA /* Constants.swift */,
 				17D180301DA4B02A00735567 /* Main.storyboard */,
 				663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */,
+				663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */,
 				17D180331DA4B02A00735567 /* Assets.xcassets */,
 				17D180351DA4B02A00735567 /* LaunchScreen.storyboard */,
 				17D180381DA4B02A00735567 /* Info.plist */,
@@ -291,6 +294,7 @@
 				17D1803F1DA57D6600735567 /* TripViewController.swift in Sources */,
 				17D1802F1DA4B02A00735567 /* ProfileViewController.swift in Sources */,
 				66685BC41DC706C000BF35BF /* TripDetailViewController.swift in Sources */,
+				663CC1E81DCB93C600662B20 /* MyTripsTableViewController.swift in Sources */,
 				172E72F71DAB170B0024BBD2 /* AppState.swift in Sources */,
 				172E72F51DAB16D00024BBD2 /* MeasurementHelper.swift in Sources */,
 				17D1802B1DA4B02A00735567 /* AppDelegate.swift in Sources */,
