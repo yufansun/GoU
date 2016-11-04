@@ -15,6 +15,10 @@ class MyTripsTableViewController: UITableViewController {
     var ref: FIRDatabaseReference!
     var userRef: FIRDatabaseReference!
     
+    
+    @IBOutlet weak var mySegment: UISegmentedControl!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myTrips = []
@@ -130,7 +134,21 @@ class MyTripsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return myTrips.count
+        var numRows = 0
+        
+        if (mySegment.selectedSegmentIndex == 0){
+            //My posts
+            numRows = myTrips.count
+            
+        }
+        if (mySegment.selectedSegmentIndex == 1){
+            //My requests
+            //TO DO
+            
+        }
+        
+        
+        return numRows
     }
     
     
@@ -139,7 +157,18 @@ class MyTripsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTripItem", for: indexPath)
         
-        cell.textLabel?.text = "From \(myTrips[indexPath.row].from) To \(myTrips[indexPath.row].to) on \(myTrips[indexPath.row].date)"
+        
+        if (mySegment.selectedSegmentIndex == 0){
+            //My posts
+            cell.textLabel?.text = "From \(myTrips[indexPath.row].from) To \(myTrips[indexPath.row].to) on \(myTrips[indexPath.row].date)"
+            
+        }
+        if (mySegment.selectedSegmentIndex == 1){
+            //My requests
+            //TO DO
+            cell.textLabel?.text = "test hjq"
+        }
+        
         
         return cell
     }
@@ -153,6 +182,11 @@ class MyTripsTableViewController: UITableViewController {
         NSLog(tripViewing.ownerID)
     }
     
+    
+    
+    @IBAction func mySegmentAction(_ sender: AnyObject) {
+        self.tableView.reloadData()
+    }
     
     /*
      // Override to support conditional editing of the table view.
