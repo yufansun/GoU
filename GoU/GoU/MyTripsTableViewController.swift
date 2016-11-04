@@ -21,8 +21,6 @@ class MyTripsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        myTrips = []
-        myRequests = []
         
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
@@ -32,39 +30,50 @@ class MyTripsTableViewController: UITableViewController {
 
         
         let userID = FIRAuth.auth()?.currentUser?.uid
-        self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
+        self.ref.child("posts").observe(.value, with: { (snapshot) in
+            myTrips = []
+            myRequests = []
+
             let key  = snapshot.key as String
             let value = snapshot.value as? NSDictionary
+            let tripKeys = value?.allKeys as! [String]
+            let temp = tripKeys[0]
             debugPrint("hello")
             debugPrint(key)
-            trip.from = value!["from"]! as! String
-            trip.to = value!["to"]! as! String
-            trip.date = value!["date"]! as! String
-            trip.seats = value!["seats"]! as! String
-            trip.notes = value!["notes"]! as! String
-            trip.tripID = key as! String
-            trip.ownerID = value!["ownerID"]! as! String
-            trip.price = value!["price"]! as! String
-            trip.pickUp = value!["pickUp"]! as! String
-            self.tripRequests = value!["requestList"]! as! String
-            
-            let requestArr = self.tripRequests.components(separatedBy: ",")
-            print(requestArr)
             
             
-            debugPrint(trip.ownerID)
-            // TODO: DO linear search?
-            
-            if (trip.ownerID == userID) {
-                if (myTrips.isEmpty || myTrips[myTrips.endIndex - 1].tripID != trip.tripID) {
-                    myTrips.append(trip)
+            for currTrip in tripKeys{
+                trip.from = (value![currTrip]! as! NSDictionary)["from"]! as! String
+                trip.to = (value![currTrip]! as! NSDictionary)["to"]! as! String
+                trip.date = (value![currTrip]! as! NSDictionary)["date"]! as! String
+                trip.seats = (value![currTrip]! as! NSDictionary)["seats"]! as! String
+                trip.notes = (value![currTrip]! as! NSDictionary)["notes"]! as! String
+                trip.tripID = currTrip
+                trip.ownerID = (value![currTrip]! as! NSDictionary)["ownerID"]! as! String
+                trip.price = (value![currTrip]! as! NSDictionary)["price"]! as! String
+                trip.pickUp = (value![currTrip]! as! NSDictionary)["pickUp"]! as! String
+                self.tripRequests = (value![currTrip]! as! NSDictionary)["requestList"]! as! String
+                
+                let requestArr = self.tripRequests.components(separatedBy: ",")
+                print(requestArr)
+                
+                
+                debugPrint(trip.ownerID)
+                // TODO: DO linear search?
+                
+                if (trip.ownerID == userID) {
+                    if (myTrips.isEmpty || myTrips[myTrips.endIndex - 1].tripID != trip.tripID) {
+                        myTrips.append(trip)
+                    }
                 }
-            }
-            
-            if (requestArr.contains(userID!)) {
-                if (myRequests.isEmpty || myRequests[myRequests.endIndex - 1].tripID != trip.tripID) {
-                    myRequests.append(trip)
+                
+                if (requestArr.contains(userID!)) {
+                    if (myRequests.isEmpty || myRequests[myRequests.endIndex - 1].tripID != trip.tripID) {
+                        myRequests.append(trip)
+                    }
                 }
+                
+
             }
             
             
@@ -156,13 +165,15 @@ class MyTripsTableViewController: UITableViewController {
         if (mySegment.selectedSegmentIndex == 0){
             //My posts
             numRows = myTrips.count
+            print(numRows)
+            
             
         }
         if (mySegment.selectedSegmentIndex == 1){
             //My requests
             //TO DO
             numRows = myRequests.count
-            
+            print(numRows)
         }
         
         

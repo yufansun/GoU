@@ -147,5 +147,19 @@ class TripDetailViewController: UIViewController {
         //TO DO: send the request to driver
     }
     
+    @IBAction func viewRequesters(_ sender: AnyObject) {
+        self.ref = FIRDatabase.database().reference(withPath: "messages")
+        
+        var requesterList = ""
+        ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            requesterList = value?["requestList"] as! String
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        requesterArr = requesterList.components(separatedBy: ",")
+    }
     
 }

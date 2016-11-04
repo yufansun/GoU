@@ -62,6 +62,7 @@ var viewingCondition = 0
 var trips = [Trip]()
 var myTrips = [Trip]()
 var myRequests = [Trip]()
+var requesterArr = [String]()
 
 struct Location {
     //TODO: make it a enum for location
