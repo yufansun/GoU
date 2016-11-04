@@ -47,4 +47,8 @@ struct Constants {
         static let photoURL = "photoURL"
         static let imageURL = "imageURL"
     }
+    
+    struct PostsFields {
+        
+    }
 }

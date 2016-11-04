@@ -19,34 +19,45 @@ class TripDetailViewController: UIViewController {
  
     
     var userRef: FIRDatabaseReference!
+    var ref: FIRDatabaseReference!
     
-    var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "")
+    var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.setNeedsDisplay()
+        tempTrip = tripViewing
         
-/*
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
         
-        var firstName = ""
-        self.userRef.child(tripViewing.ownerID).observe(.childAdded, with: { (snapshot) in
+        
+        
+        self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
+            let key  = snapshot.key as String
             let value = snapshot.value as? NSDictionary
-            firstName = value!["firstName"]! as! String
+            let firstName = value!["firstName"]! as! String
+            let lastName = value!["lastName"]! as! String
+            driverInfo.gender = value!["gender"]! as! String
+            let city = value!["currentCityName"]! as! String
+            let state = value!["currentStateName"]! as! String
+            let country = value!["currentCountryName"]! as! String
+            driverInfo.email = value!["emailAddress"]! as! String
+            driverInfo.phone = value!["phoneNumber"]! as! String
+            driverInfo.aboutme = value!["aboutMe"]! as! String
             
-            NSLog(firstName)
+            driverInfo.name = firstName + " " + lastName
+            driverInfo.loc = city + ", " + state + ", " + country
+            print("a")
+            
             
         }) { (error) in
             print(error.localizedDescription)
         }
- */
 
         
         
-        
-        tempTrip = tripViewing
         
         
         self.info.text = "Waiting......"
@@ -76,8 +87,9 @@ class TripDetailViewController: UIViewController {
         self.info.text = "From " + tempTrip.from + " To " + tempTrip.to + "\n"
             + "On " + tempTrip.date + "\n"
             + tempTrip.seats + " seats available\n"
+            + "Price: " + tempTrip.price + "\n"
+            + "Pick Up Info: " + tempTrip.pickUp + "\n"
             + "Driver's notes: " + tempTrip.notes + "\n"
-            + "Provided by " + tempTrip.ownerID + "\n"
         self.view.setNeedsDisplay()
     }
     
@@ -95,6 +107,27 @@ class TripDetailViewController: UIViewController {
 
     
     @IBAction func submit(_ sender: UIButton) {
+        
+        self.ref = FIRDatabase.database().reference(withPath: "messages")
+        
+        var reqList = ""
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            reqList = value?["requestList"] as! String
+//            print("in database postlist is " + postList)
+            reqList = reqList + userID! + ","
+//            print("after postlist is " + postList)
+            var path = "messages/" + userID! + "/myPostsList"
+            self.ref.child("posts").child(tripViewing.tripID).child("requestList").setValue(reqList)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        
+        
+        
         let alert = UIAlertController(title: "Thank You",
                                       message: "Send request to driver sucessfully!", preferredStyle: .alert)
         let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)

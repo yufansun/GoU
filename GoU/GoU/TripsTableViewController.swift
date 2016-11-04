@@ -15,6 +15,7 @@ class TripsTableViewController: UITableViewController {
     
     
     var ref: FIRDatabaseReference!
+    var userRef: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,22 @@ class TripsTableViewController: UITableViewController {
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         
         trips = []
+        
+//        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
+//        
+//        let userID = FIRAuth.auth()?.currentUser?.uid
+//        self.userRef.child(userID!).observe(.value, with: { (snapshot) in
+//            // Get user value
+//            let key = snapshot.key as? String
+//            let value = snapshot.value as? NSDictionary
+//            myPostList = value?["myPostsList"] as! String
+//            print(myPostList)
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+        
+
+
         
         self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
             let key  = snapshot.key as String
@@ -35,27 +52,12 @@ class TripsTableViewController: UITableViewController {
             trip.notes = value!["notes"]! as! String
             trip.tripID = key as! String
             trip.ownerID = value!["ownerID"]! as! String
-            
-/*
-            if let user = FIRAuth.auth()?.currentUser {
-                trip.ownerID = user.uid;  // The user's ID, unique to the Firebase project.
-            } else {
-                // No user is signed in.
-            }
-*/
+            trip.price = value!["price"]! as! String
+            trip.pickUp = value!["pickUp"]! as! String
+
             
             debugPrint(trip.ownerID)
             // TODO: DO linear search?
-            /*
-            if (trips.isEmpty){
-                trips.append(trip)
-            }
-            for i in 0 ..< trips.count  {
-                if (trips[i].tripID != trip.tripID){
-                    trips.append(trip)
-                }
-            }//for
-            */
             
             if (trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID) {
                 trips.append(trip)
@@ -70,7 +72,6 @@ class TripsTableViewController: UITableViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
-        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -104,12 +105,6 @@ class TripsTableViewController: UITableViewController {
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TripItem", for: indexPath)
-        
-        // Configure the cell...
-        //cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"
-        //trips[indexPath.row]
-        //        cell.textLabel?.text = "From \(trips[indexPath.row].from) To \(trips[indexPath.row].to) on \(trips[indexPath.row].date)"
-        
         
         cell.textLabel?.text = "From \(trips[indexPath.row].from) To \(trips[indexPath.row].to) on \(trips[indexPath.row].date)"
         

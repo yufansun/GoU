@@ -18,9 +18,12 @@ struct Trip {
     var ownerID: String
     var tripID: String
     var notes: String
+    var price: String
+    var pickUp: String
     
     
-    init(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String) {
+    
+    init(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String) {
         self.from = from
         self.to = to
         self.date = date
@@ -28,8 +31,10 @@ struct Trip {
         self.ownerID = ownerID
         self.tripID = tripID
         self.notes = notes
+        self.pickUp = pickUp
+        self.price = price
     }
-    mutating func setNew(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String) {
+    mutating func setNew(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String) {
         self.from = from
         self.to = to
         self.date = date
@@ -37,15 +42,19 @@ struct Trip {
         self.ownerID = ownerID
         self.tripID = tripID
         self.notes = notes
+        self.pickUp = pickUp
+        self.price = price
     }
 }
 
-var trip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "")
+var trip = Trip(from: "Your location",to: "Destination",date: "00/00/0000",seats: "0", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
 
-var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "")
+var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
 
+var currentProfile = [:] as NSDictionary
 
 var trips = [Trip]()
+var myTrips = [Trip]()
 
 struct Location {
     //TODO: make it a enum for location
@@ -100,6 +109,7 @@ struct DriverProfile {
     }
 }
 
+
 struct VehicleInformation {
     var make: String
     var year: String
@@ -114,6 +124,36 @@ struct VehicleInformation {
         self.year = year
     }
 }
+
+struct DriverViewProfile {
+    var name: String //TO DO: Make it a location
+    var gender: String
+    var loc: String //TO DO: Make it a date
+    var email: String
+    var phone: String
+    var aboutme: String
+    
+    init(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String) {
+        self.name = name
+        self.gender = gender
+        self.loc = loc
+        self.email = email
+        self.phone = phone
+        self.aboutme = aboutme
+    }
+    mutating func setNew(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String) {
+        self.name = name
+        self.gender = gender
+        self.loc = loc
+        self.email = email
+        self.phone = phone
+        self.aboutme = aboutme
+        
+    }
+}
+
+var driverInfo =  DriverViewProfile(name: "", gender: "", loc: "", email: "", phone: "", aboutme: "")
+var myPostList = ""
 
 struct CommonProfile {
     var userId: String

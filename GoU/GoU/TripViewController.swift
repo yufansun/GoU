@@ -16,6 +16,8 @@ class TripViewController: UIViewController {
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var seatsTextField: UITextField!
     @IBOutlet weak var notesTextField: UITextField!
+    @IBOutlet weak var pickTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!
     
     var ref: FIRDatabaseReference!
     var rootRef: FIRDatabaseReference!
@@ -60,21 +62,16 @@ class TripViewController: UIViewController {
             
         else
         {
-            //            trip.from = fromTextField.text!
-            //            trip.to = toTextField.text!
-            //            trip.date = dateTextField.text!
-            //            trip.seats = seatsTextField.text!
-            //            trips.append(trip)
-
-            
-            
             let postKey = ref.child("posts").childByAutoId().key as String
             self.ref.child("posts").child(postKey).setValue(["from": fromTextField.text!,
                                                              "to": toTextField.text!,
                                                              "date": dateTextField.text!,
                                                              "seats": seatsTextField.text!,
                                                              "notes": notesTextField.text!,
-                                                             "ownerID": userID
+                                                             "price": priceTextField.text!,
+                                                             "pickUp": pickTextField.text!,
+                                                             "ownerID": userID,
+                                                             "requestList": ""
                 ])
             
             self.ref.child("posts").observe(.childAdded, with: { (snapshot) in

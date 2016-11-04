@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mA9-XM-84R">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mA9-XM-84R">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -367,7 +367,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XhC-GO-4yR" id="bhb-r2-mzN">
-                                    <frame key="frameInset" width="342" height="64"/>
+                                    <frame key="frameInset" width="342" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -452,7 +452,7 @@
         <!--Driver profile-->
         <scene sceneID="m6X-L8-lUf">
             <objects>
-                <viewController id="AIe-Ii-fAP" sceneMemberID="viewController">
+                <viewController id="AIe-Ii-fAP" customClass="DriverProfileViewController" customModule="GoU" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xXo-Tz-Rc8"/>
                         <viewControllerLayoutGuide type="bottom" id="b1H-1b-FgZ"/>
@@ -461,19 +461,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcs-uH-G2d">
-                                <frame key="frameInset" minX="195" minY="286" width="46" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHP-5I-a93">
+                                <frame key="frameInset" minX="16" minY="80" width="343" height="522"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Driver profile" id="05L-3p-GUy"/>
+                    <connections>
+                        <outlet property="info" destination="WHP-5I-a93" id="Af1-9d-ouP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYG-T7-nZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3222" y="71"/>
+            <point key="canvasLocation" x="3221.5999999999999" y="70.614692653673174"/>
         </scene>
         <!--New Trip-->
         <scene sceneID="Zd5-KZ-nJS">
@@ -605,6 +610,8 @@
                         <outlet property="dateTextField" destination="cw0-Zv-CAb" id="1NU-VV-tmQ"/>
                         <outlet property="fromTextField" destination="frz-a5-uGf" id="Ccn-me-cHz"/>
                         <outlet property="notesTextField" destination="5sK-ni-KNS" id="UTl-gh-PrC"/>
+                        <outlet property="pickTextField" destination="5sK-ni-KNS" id="7XS-Pw-cMh"/>
+                        <outlet property="priceTextField" destination="de6-VW-54g" id="Ow3-mO-5ge"/>
                         <outlet property="seatsTextField" destination="vZA-HR-hmp" id="rMV-8l-16N"/>
                         <outlet property="toTextField" destination="VLH-q8-QNa" id="ZDo-Y8-Sp6"/>
                     </connections>
@@ -643,11 +650,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sCv-Bt-nlj">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyTripItem" id="sCv-Bt-nlj" userLabel="MyTripItem">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sCv-Bt-nlj" id="o76-08-9Q6">
-                                    <frame key="frameInset" width="375" height="44"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
