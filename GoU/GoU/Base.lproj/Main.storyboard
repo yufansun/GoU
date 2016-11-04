@@ -352,7 +352,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-618" y="795"/>
+            <point key="canvasLocation" x="-454" y="475"/>
         </scene>
         <!--Recent Posts-->
         <scene sceneID="4zn-EZ-YYA">
@@ -427,22 +427,39 @@
                                     <segue destination="AIe-Ii-fAP" kind="show" id="82s-eL-RY6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExB-Zb-Dzk">
-                                <frame key="frameInset" minX="176" minY="535" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0YG-nA-BEh">
+                                <frame key="frameInset" minX="130" minY="468" width="115" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="GO!"/>
+                                <state key="normal" title="View Requesters"/>
                                 <connections>
-                                    <action selector="submit:" destination="I81-to-IQV" eventType="touchUpInside" id="yOv-on-AVi"/>
+                                    <segue destination="iP0-VL-qFB" kind="show" id="BFt-vW-qKr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rtU-YJ-Ygn">
+                                <frame key="frameInset" minX="172" minY="486" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Go!"/>
+                                <connections>
+                                    <action selector="sendRequest:" destination="I81-to-IQV" eventType="touchUpInside" id="XWU-Yu-VaL"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Trip Info" id="5uP-f4-lod"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Trip Info" id="5uP-f4-lod">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Mzr-it-JXC">
+                            <connections>
+                                <segue destination="nsf-Sw-dXP" kind="show" id="0YS-5G-xqF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="info" destination="RJE-sX-vp8" id="jcg-CQ-HKB"/>
-                        <outlet property="match" destination="ExB-Zb-Dzk" id="4xE-av-DFt"/>
+                        <outlet property="matchTripButton" destination="rtU-YJ-Ygn" id="xKV-NO-Orm"/>
+                        <outlet property="viewDriverProfileButton" destination="0Ew-WY-4gd" id="RsC-wl-YMa"/>
+                        <outlet property="viewRequestersButton" destination="0YG-nA-BEh" id="uY9-0Y-crp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51v-xd-gE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -478,9 +495,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYG-T7-nZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3130" y="71"/>
+            <point key="canvasLocation" x="3138" y="71"/>
         </scene>
-        <!--New Trip-->
+        <!--Edit Trip-->
         <scene sceneID="Zd5-KZ-nJS">
             <objects>
                 <viewController id="nsf-Sw-dXP" customClass="TripViewController" customModule="GoU" customModuleProvider="target" sceneMemberID="viewController">
@@ -605,7 +622,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Trip" id="eY9-QQ-s8g"/>
+                    <navigationItem key="navigationItem" title="Edit Trip" id="eY9-QQ-s8g"/>
                     <connections>
                         <outlet property="dateTextField" destination="cw0-Zv-CAb" id="1NU-VV-tmQ"/>
                         <outlet property="fromTextField" destination="frz-a5-uGf" id="Ccn-me-cHz"/>
@@ -618,7 +635,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XkU-Yo-60l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2360.8000000000002" y="-655.32233883058473"/>
+            <point key="canvasLocation" x="2361" y="-655"/>
         </scene>
         <!--Browse-->
         <scene sceneID="tgY-3W-wgu">
@@ -657,6 +674,9 @@
                                     <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="I81-to-IQV" kind="show" id="Lhb-Ca-JHc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -697,20 +717,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8H0-mo-dt0">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8H0-mo-dt0" id="JHt-XP-ZWl">
                                     <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UED-Sg-3DL">
-                                            <frame key="frameInset" minX="298" minY="-2" width="57" height="34"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Accept">
-                                                <color key="titleColor" red="0.073821483456928405" green="0.14571981424184333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                        </button>
-                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="AIe-Ii-fAP" kind="show" id="AwM-bL-uGQ"/>
@@ -722,13 +733,11 @@
                             <outlet property="delegate" destination="iP0-VL-qFB" id="9Pw-FC-a4i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Requesters" id="Dee-5G-d7Z">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="AcL-JJ-aUj"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Requesters" id="Dee-5G-d7Z"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Trt-ts-4nk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2846" y="1243"/>
+            <point key="canvasLocation" x="2361" y="769"/>
         </scene>
         <!--Profile-->
         <scene sceneID="dEr-kD-qng">
@@ -749,7 +758,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K5E-5b-9ls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="777" y="327"/>
+            <point key="canvasLocation" x="777" y="476"/>
         </scene>
         <!--My trips-->
         <scene sceneID="iZm-7b-ouc">
@@ -778,7 +787,9 @@
         <image name="goulogo1" width="171" height="106"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AwM-bL-uGQ"/>
+        <segue reference="0YS-5G-xqF"/>
+        <segue reference="Lhb-Ca-JHc"/>
+        <segue reference="82s-eL-RY6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>

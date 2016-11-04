@@ -11,12 +11,11 @@ import Firebase
 
 class TripDetailViewController: UIViewController {
     
-
-    @IBOutlet weak var info: UILabel!
     
- 
-    @IBOutlet weak var match: UIButton!
- 
+    @IBOutlet weak var info: UILabel!
+    @IBOutlet weak var matchTripButton: UIButton!
+    @IBOutlet weak var viewDriverProfileButton: UIButton!
+    @IBOutlet weak var viewRequestersButton: UIButton!
     
     var userRef: FIRDatabaseReference!
     var ref: FIRDatabaseReference!
@@ -24,58 +23,66 @@ class TripDetailViewController: UIViewController {
     var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.setNeedsDisplay()
         tempTrip = tripViewing
         
-        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
+        viewDriverProfileButton.isHidden = true
+        viewRequestersButton.isHidden = true
+        matchTripButton.isHidden = true
         
-        
-        
-        self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
-            let key  = snapshot.key as String
-            let value = snapshot.value as? NSDictionary
-            let firstName = value!["firstName"]! as! String
-            let lastName = value!["lastName"]! as! String
-            driverInfo.gender = value!["gender"]! as! String
-            let city = value!["currentCityName"]! as! String
-            let state = value!["currentStateName"]! as! String
-            let country = value!["currentCountryName"]! as! String
-            driverInfo.email = value!["emailAddress"]! as! String
-            driverInfo.phone = value!["phoneNumber"]! as! String
-            driverInfo.aboutme = value!["aboutMe"]! as! String
+        if(viewingCondition == 0){
+            viewDriverProfileButton.isHidden = false
+            matchTripButton.isHidden = false
             
-            driverInfo.name = firstName + " " + lastName
-            driverInfo.loc = city + ", " + state + ", " + country
-            print("a")
-            
-            
-        }) { (error) in
-            print(error.localizedDescription)
+            self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
+            self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
+                let key  = snapshot.key as String
+                let value = snapshot.value as? NSDictionary
+                let firstName = value!["firstName"]! as! String
+                let lastName = value!["lastName"]! as! String
+                driverInfo.gender = value!["gender"]! as! String
+                let city = value!["currentCityName"]! as! String
+                let state = value!["currentStateName"]! as! String
+                let country = value!["currentCountryName"]! as! String
+                driverInfo.email = value!["emailAddress"]! as! String
+                driverInfo.phone = value!["phoneNumber"]! as! String
+                driverInfo.aboutme = value!["aboutMe"]! as! String
+                
+                driverInfo.name = firstName + " " + lastName
+                driverInfo.loc = city + ", " + state + ", " + country
+                print("a")
+                
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+            showInfo()
         }
-
         
-        
-        
-        
-        self.info.text = "Waiting......"
-        showInfo()
-        
-        
-        // Do any additional setup after loading the view.
+        if(viewingCondition == 1){
+            //view from myTrips->post
+            viewRequestersButton.isHidden = false
+            
+            //TO DO
+        }
+        if(viewingCondition == 2){
+            //view from myTrips->requests
+            //TO DO
+            
+        }
     }
     
-
     
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     func showInfo()
     {
         self.info.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -95,19 +102,17 @@ class TripDetailViewController: UIViewController {
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
-
     
-    @IBAction func submit(_ sender: UIButton) {
-        
+    @IBAction func sendRequest(_ sender: AnyObject) {
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         
         var reqList = ""
@@ -116,15 +121,15 @@ class TripDetailViewController: UIViewController {
             // Get user value
             let value = snapshot.value as? NSDictionary
             reqList = value?["requestList"] as! String
-//            print("in database postlist is " + postList)
+            //            print("in database postlist is " + postList)
             reqList = reqList + userID! + ","
-//            print("after postlist is " + postList)
+            //            print("after postlist is " + postList)
             var path = "messages/" + userID! + "/myPostsList"
             self.ref.child("posts").child(tripViewing.tripID).child("requestList").setValue(reqList)
         }) { (error) in
             print(error.localizedDescription)
         }
-
+        
         
         
         
@@ -135,7 +140,7 @@ class TripDetailViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         
         //TO DO: send the request to driver
-
     }
-
+    
+    
 }

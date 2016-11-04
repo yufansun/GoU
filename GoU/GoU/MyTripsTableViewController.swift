@@ -175,7 +175,18 @@ class MyTripsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //TO DO: Check the ordering
+        //TO DO:
+        
+        if (mySegment.selectedSegmentIndex == 0){
+            //My posts
+            viewingCondition = 1
+            
+        }
+        if (mySegment.selectedSegmentIndex == 1){
+            //My requests
+            viewingCondition = 2
+        }
+
         
         tripViewing = myTrips[indexPath.row]
         

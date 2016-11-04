@@ -116,6 +116,7 @@ class TripsTableViewController: UITableViewController {
         //TO DO: Check the ordering
         
         tripViewing = trips[indexPath.row]
+        viewingCondition = 0
         
         NSLog(tripViewing.ownerID)
     }

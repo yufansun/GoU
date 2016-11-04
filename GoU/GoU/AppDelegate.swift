@@ -53,6 +53,12 @@ var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats:
 
 var currentProfile = [:] as NSDictionary
 
+var viewingCondition = 0
+//0 : view trip detail from posts
+//1 : view trip detail from myTrips->posts
+//2 : view trip detail from myTrips->requests
+
+
 var trips = [Trip]()
 var myTrips = [Trip]()
 
