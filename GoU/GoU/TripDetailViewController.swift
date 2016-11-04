@@ -33,43 +33,48 @@ class TripDetailViewController: UIViewController {
         viewRequestersButton.isHidden = true
         matchTripButton.isHidden = true
         
+        
+        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
+        self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
+            let key  = snapshot.key as String
+            let value = snapshot.value as? NSDictionary
+            let firstName = value!["firstName"]! as! String
+            let lastName = value!["lastName"]! as! String
+            driverInfo.gender = value!["gender"]! as! String
+            let city = value!["currentCityName"]! as! String
+            let state = value!["currentStateName"]! as! String
+            let country = value!["currentCountryName"]! as! String
+            driverInfo.email = value!["emailAddress"]! as! String
+            driverInfo.phone = value!["phoneNumber"]! as! String
+            driverInfo.aboutme = value!["aboutMe"]! as! String
+            
+            driverInfo.name = firstName + " " + lastName
+            driverInfo.loc = city + ", " + state + ", " + country
+            print("a")
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        
         if(viewingCondition == 0){
             viewDriverProfileButton.isHidden = false
             matchTripButton.isHidden = false
             
-            self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
-            self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
-                let key  = snapshot.key as String
-                let value = snapshot.value as? NSDictionary
-                let firstName = value!["firstName"]! as! String
-                let lastName = value!["lastName"]! as! String
-                driverInfo.gender = value!["gender"]! as! String
-                let city = value!["currentCityName"]! as! String
-                let state = value!["currentStateName"]! as! String
-                let country = value!["currentCountryName"]! as! String
-                driverInfo.email = value!["emailAddress"]! as! String
-                driverInfo.phone = value!["phoneNumber"]! as! String
-                driverInfo.aboutme = value!["aboutMe"]! as! String
-                
-                driverInfo.name = firstName + " " + lastName
-                driverInfo.loc = city + ", " + state + ", " + country
-                print("a")
-                
-            }) { (error) in
-                print(error.localizedDescription)
-            }
             showInfo()
         }
         
         if(viewingCondition == 1){
             //view from myTrips->post
             viewRequestersButton.isHidden = false
+            showInfo()
             
             //TO DO
         }
         if(viewingCondition == 2){
             //view from myTrips->requests
             //TO DO
+            showInfo()
             
         }
     }

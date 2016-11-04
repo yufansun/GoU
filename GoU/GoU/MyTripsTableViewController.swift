@@ -14,7 +14,7 @@ class MyTripsTableViewController: UITableViewController {
     
     var ref: FIRDatabaseReference!
     var userRef: FIRDatabaseReference!
-    
+    var tripRequests = ""
     
     @IBOutlet weak var mySegment: UISegmentedControl!
     
@@ -22,8 +22,13 @@ class MyTripsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myTrips = []
+        myRequests = []
         
         self.ref = FIRDatabase.database().reference(withPath: "messages")
+        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
+        
+        
+
 
         
         let userID = FIRAuth.auth()?.currentUser?.uid
@@ -41,15 +46,27 @@ class MyTripsTableViewController: UITableViewController {
             trip.ownerID = value!["ownerID"]! as! String
             trip.price = value!["price"]! as! String
             trip.pickUp = value!["pickUp"]! as! String
+            self.tripRequests = value!["requestList"]! as! String
+            
+            let requestArr = self.tripRequests.components(separatedBy: ",")
+            print(requestArr)
             
             
             debugPrint(trip.ownerID)
             // TODO: DO linear search?
+            
             if (trip.ownerID == userID) {
                 if (myTrips.isEmpty || myTrips[myTrips.endIndex - 1].tripID != trip.tripID) {
                     myTrips.append(trip)
                 }
             }
+            
+            if (requestArr.contains(userID!)) {
+                if (myRequests.isEmpty || myRequests[myRequests.endIndex - 1].tripID != trip.tripID) {
+                    myRequests.append(trip)
+                }
+            }
+            
             
             self.tableView.delegate = self
             self.tableView.dataSource = self
@@ -144,6 +161,7 @@ class MyTripsTableViewController: UITableViewController {
         if (mySegment.selectedSegmentIndex == 1){
             //My requests
             //TO DO
+            numRows = myRequests.count
             
         }
         
@@ -166,7 +184,7 @@ class MyTripsTableViewController: UITableViewController {
         if (mySegment.selectedSegmentIndex == 1){
             //My requests
             //TO DO
-            cell.textLabel?.text = "test hjq"
+            cell.textLabel?.text = "From \(myRequests[indexPath.row].from) To \(myRequests[indexPath.row].to) on \(myRequests[indexPath.row].date)"
         }
         
         
@@ -180,15 +198,14 @@ class MyTripsTableViewController: UITableViewController {
         if (mySegment.selectedSegmentIndex == 0){
             //My posts
             viewingCondition = 1
+            tripViewing = myTrips[indexPath.row]
             
         }
         if (mySegment.selectedSegmentIndex == 1){
             //My requests
             viewingCondition = 2
+            tripViewing = myRequests[indexPath.row]
         }
-
-        
-        tripViewing = myTrips[indexPath.row]
         
         NSLog(tripViewing.ownerID)
     }
