@@ -183,7 +183,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="GOUlogo1x" translatesAutoresizingMaskIntoConstraints="NO" id="YJR-eQ-mVQ">
-                                                <frame key="frameInset" minX="269" minY="31" width="110" height="50"/>
+                                                <frame key="frameInset" minX="133" minY="31" width="110" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
                                         </subviews>
@@ -367,7 +367,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XhC-GO-4yR" id="bhb-r2-mzN">
-                                    <frame key="frameInset" width="342" height="63"/>
+                                    <frame key="frameInset" width="342" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -410,8 +410,28 @@
                                 <frame key="frameInset" minX="44" minY="76" width="294" height="345"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="From Shanghai To Beijing">
+                                    <fragment content="From ">
                                         <attributes>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="2" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Shanghai">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="18" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="2" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" to ">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="2" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Beijing">
+                                        <attributes>
+                                            <color key="NSColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="system" size="18"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="2" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -420,25 +440,31 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ew-WY-4gd">
-                                <frame key="frameInset" minX="119" minY="448" width="137" height="30"/>
+                                <frame key="frameInset" minX="16" minY="408" width="164" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View Driver's profile"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="View Driver Profile"/>
                                 <connections>
                                     <segue destination="AIe-Ii-fAP" kind="show" id="82s-eL-RY6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0YG-nA-BEh">
-                                <frame key="frameInset" minX="130" minY="468" width="115" height="30"/>
+                                <frame key="frameInset" minX="216" minY="408" width="146" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View Requesters"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="View Rider Profile"/>
                                 <connections>
                                     <action selector="viewRequesters:" destination="I81-to-IQV" eventType="touchUpInside" id="67E-kq-VUQ"/>
                                     <segue destination="iP0-VL-qFB" kind="show" id="BFt-vW-qKr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rtU-YJ-Ygn">
-                                <frame key="frameInset" minX="172" minY="486" width="30" height="30"/>
+                                <frame key="frameInset" minX="131" minY="513" width="120" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Go!"/>
                                 <connections>
                                     <action selector="sendRequest:" destination="I81-to-IQV" eventType="touchUpInside" id="XWU-Yu-VaL"/>
@@ -465,7 +491,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51v-xd-gE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="71"/>
+            <point key="canvasLocation" x="2360.8000000000002" y="70.614692653673174"/>
         </scene>
         <!--User profile-->
         <scene sceneID="m6X-L8-lUf">
@@ -496,7 +522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYG-T7-nZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3138" y="71"/>
+            <point key="canvasLocation" x="2929" y="202"/>
         </scene>
         <!--Edit Trip-->
         <scene sceneID="Zd5-KZ-nJS">
@@ -567,54 +593,56 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="GOUlogo1x" translatesAutoresizingMaskIntoConstraints="NO" id="GEO-3z-Crm">
-                                <frame key="frameInset" minX="265" minY="72" width="110" height="50"/>
+                                <frame key="frameInset" minX="145" minY="72" width="110" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pick up:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXp-uY-X4a">
-                                <frame key="frameInset" minX="61" minY="446" width="61" height="21"/>
+                                <frame key="frameInset" minX="61" minY="399" width="61" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31d-G0-Udr">
-                                <frame key="frameInset" minX="61" minY="395" width="44" height="21"/>
+                                <frame key="frameInset" minX="61" minY="348" width="44" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMy-Ks-7It">
-                                <frame key="frameInset" minX="61" minY="345" width="51" height="21"/>
+                                <frame key="frameInset" minX="61" minY="449" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5sK-ni-KNS">
-                                <frame key="frameInset" minX="135" minY="443" width="157" height="30"/>
+                                <frame key="frameInset" minX="135" minY="396" width="157" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="de6-VW-54g">
-                                <frame key="frameInset" minX="135" minY="392" width="157" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$30" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="de6-VW-54g">
+                                <frame key="frameInset" minX="135" minY="345" width="157" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QuZ-8F-jao">
-                                <frame key="frameInset" minX="135" minY="342" width="157" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QuZ-8F-jao">
+                                <frame key="frameInset" minX="61.93%" minY="70.02%" width="157" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPw-Zl-rSb">
-                                <frame key="frameInset" minX="163" minY="517" width="49" height="30"/>
+                                <frame key="frameInset" minX="135" minY="505" width="120" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitTrip:" destination="nsf-Sw-dXP" eventType="touchUpInside" id="apl-MK-lg5"/>
@@ -636,7 +664,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XkU-Yo-60l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="-655"/>
+            <point key="canvasLocation" x="2360.8000000000002" y="-655.32233883058473"/>
         </scene>
         <!--Browse-->
         <scene sceneID="tgY-3W-wgu">
@@ -672,7 +700,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sCv-Bt-nlj" id="o76-08-9Q6">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -708,7 +736,7 @@
             </objects>
             <point key="canvasLocation" x="1569" y="1277"/>
         </scene>
-        <!--Requesters-->
+        <!--Rider-->
         <scene sceneID="exR-Pc-gAl">
             <objects>
                 <tableViewController id="iP0-VL-qFB" sceneMemberID="viewController">
@@ -721,7 +749,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8H0-mo-dt0" id="JHt-XP-ZWl">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -734,7 +762,7 @@
                             <outlet property="delegate" destination="iP0-VL-qFB" id="9Pw-FC-a4i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Requesters" id="Dee-5G-d7Z"/>
+                    <navigationItem key="navigationItem" title="Rider" id="Dee-5G-d7Z"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Trt-ts-4nk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -761,11 +789,11 @@
             </objects>
             <point key="canvasLocation" x="777" y="476"/>
         </scene>
-        <!--My trips-->
+        <!--Trips-->
         <scene sceneID="iZm-7b-ouc">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kZj-AM-JIO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My trips" id="sP9-BH-7SA"/>
+                    <tabBarItem key="tabBarItem" title="Trips" image="list" id="sP9-BH-7SA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rq5-kR-zgY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -786,11 +814,12 @@
         <image name="Profile" width="37" height="37"/>
         <image name="car" width="37" height="37"/>
         <image name="goulogo1" width="171" height="106"/>
+        <image name="list" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0YS-5G-xqF"/>
         <segue reference="Lhb-Ca-JHc"/>
         <segue reference="82s-eL-RY6"/>
+        <segue reference="0YS-5G-xqF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>
