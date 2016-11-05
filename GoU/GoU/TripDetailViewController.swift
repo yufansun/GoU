@@ -6,6 +6,8 @@
 //  Copyright © 2016 SunYufan. All rights reserved.
 //
 
+// TODO: dynamic button go to rider's profile
+
 import UIKit
 import Firebase
 
@@ -20,7 +22,7 @@ class TripDetailViewController: UIViewController {
     var userRef: FIRDatabaseReference!
     var ref: FIRDatabaseReference!
     
-    var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
+    var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "", riderID: "")
     
     
     
@@ -67,6 +69,13 @@ class TripDetailViewController: UIViewController {
         if(viewingCondition == 1){
             //view from myTrips->post
             viewRequestersButton.isHidden = false
+            if (tripViewing.riderID != ""){
+            
+                viewDriverProfileButton.setTitle("View your rider's profile", for: .normal)
+                viewDriverProfileButton.isHidden = false
+                viewRequestersButton.isHidden = true
+            }
+            
             showInfo()
             
             //TO DO
@@ -102,6 +111,50 @@ class TripDetailViewController: UIViewController {
             + "Price: " + tempTrip.price + "\n"
             + "Pick Up Info: " + tempTrip.pickUp + "\n"
             + "Driver's notes: " + tempTrip.notes + "\n"
+        if (viewingCondition == 1) {
+            if (tempTrip.riderID == "") {
+                self.info.text! += "No selected Rider.\n"
+            }
+            else {
+                self.info.text! += "You have selected a Rider.\n"
+                self.userRef.child(tempTrip.riderID).observe(.value, with: { (snapshot) in
+                    let key  = snapshot.key as String
+                    let value = snapshot.value as? NSDictionary
+                    let firstName = value!["firstName"]! as! String
+                    let lastName = value!["lastName"]! as! String
+                    driverInfo.gender = value!["gender"]! as! String
+                    let city = value!["currentCityName"]! as! String
+                    let state = value!["currentStateName"]! as! String
+                    let country = value!["currentCountryName"]! as! String
+                    driverInfo.email = value!["emailAddress"]! as! String
+                    driverInfo.phone = value!["phoneNumber"]! as! String
+                    driverInfo.aboutme = value!["aboutMe"]! as! String
+                    driverInfo.userID = value!["userId"]! as! String
+                    
+                    driverInfo.name = firstName + " " + lastName
+                    driverInfo.loc = city + ", " + state + ", " + country
+                    print("a")
+                    
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
+
+                
+            }
+        }
+        else if (viewingCondition == 2) {
+            let userID = (FIRAuth.auth()?.currentUser?.uid)! as String
+            if (tempTrip.riderID == "") {
+                self.info.text! += "The driver has not chosen a rider.\n"
+            }
+            else if (userID == tempTrip.riderID){
+                self.info.text! += "The driver has chosen you as the rider!\n"
+            }
+            else {
+                self.info.text! += "The driver has chosen someone else as the rider QAQ\n"
+            }
+
+        }
         self.view.setNeedsDisplay()
     }
     
@@ -135,6 +188,20 @@ class TripDetailViewController: UIViewController {
             print(error.localizedDescription)
         }
         
+        self.userRef.child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            reqList = value?["myRequestsList"] as! String
+            //            print("in database postlist is " + postList)
+            reqList = reqList + tripViewing.tripID + ","
+            //            print("after postlist is " + postList)
+//            var path = "commonProfiles/" + userID! + "/myPostsList"
+            self.userRef.child(userID!).child("myRequestsList").setValue(reqList)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        
         
         
         
@@ -151,15 +218,19 @@ class TripDetailViewController: UIViewController {
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         
         var requesterList = ""
-        ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
+        self.ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
-            requesterList = value?["requestList"] as! String
+            let requesterList = value?["requestList"] as! String
+            requesterArr = requesterList.components(separatedBy: ",")
+            let temp = requesterArr
+            print(requesterArr)
+            
         }) { (error) in
             print(error.localizedDescription)
         }
+        
 
-        requesterArr = requesterList.components(separatedBy: ",")
     }
     
 }

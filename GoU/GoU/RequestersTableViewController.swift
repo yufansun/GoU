@@ -13,6 +13,7 @@ class RequestersTableViewController: UITableViewController {
 
     var ref: FIRDatabaseReference!
     var userRef: FIRDatabaseReference!
+    var tripRequests = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,30 +21,51 @@ class RequestersTableViewController: UITableViewController {
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
         
-        trips = []
         
-        self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
+        
+        
+        
+        let tripID = tripViewing.tripID
+        self.userRef.observe(.value, with: { (snapshot) in
+            requesters = []
+            
             let key  = snapshot.key as String
             let value = snapshot.value as? NSDictionary
+            let userKeys = value?.allKeys as! [String]
+            let temp = userKeys[0]
             debugPrint("hello")
             debugPrint(key)
-            trip.from = value!["from"]! as! String
-            trip.to = value!["to"]! as! String
-            trip.date = value!["date"]! as! String
-            trip.seats = value!["seats"]! as! String
-            trip.notes = value!["notes"]! as! String
-            trip.tripID = key as! String
-            trip.ownerID = value!["ownerID"]! as! String
-            trip.price = value!["price"]! as! String
-            trip.pickUp = value!["pickUp"]! as! String
             
             
-            debugPrint(trip.ownerID)
-            // TODO: DO linear search?
-            
-            if (trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID) {
-                trips.append(trip)
+            for currUser in userKeys{
+                let firstName = (value![currUser]! as! NSDictionary)["firstName"]! as! String
+                let lastName = (value![currUser]! as! NSDictionary)["lastName"]! as! String
+                driverInfo.gender = (value![currUser]! as! NSDictionary)["gender"]! as! String
+                let city = (value![currUser]! as! NSDictionary)["currentCityName"]! as! String
+                let state = (value![currUser]! as! NSDictionary)["currentStateName"]! as! String
+                let country = (value![currUser]! as! NSDictionary)["currentCountryName"]! as! String
+                driverInfo.email = (value![currUser]! as! NSDictionary)["emailAddress"]! as! String
+                driverInfo.phone = (value![currUser]! as! NSDictionary)["phoneNumber"]! as! String
+                driverInfo.aboutme = (value![currUser]! as! NSDictionary)["aboutMe"]! as! String
+                driverInfo.userID = (value![currUser]! as! NSDictionary)["userId"]! as! String
+                self.tripRequests = (value![currUser]! as! NSDictionary)["myRequestsList"]! as! String
+
+                
+                driverInfo.name = firstName + " " + lastName
+                driverInfo.loc = city + ", " + state + ", " + country
+
+                let requestsArr = self.tripRequests.components(separatedBy: ",")
+                print(requestsArr)
+
+                // TODO: DO linear search?
+                
+                if (requestsArr.contains(tripViewing.tripID)) {
+                    requesters.append(driverInfo)
+                }
+                
+                
             }
+            
             
             self.tableView.delegate = self
             self.tableView.dataSource = self
@@ -54,6 +76,7 @@ class RequestersTableViewController: UITableViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -79,26 +102,32 @@ class RequestersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return trips.count
+        var numRows = 0
+
+        numRows = requesters.count
+        print(numRows)
+
+        return numRows
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TripItem", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "requesterItem", for: indexPath)
         
-        cell.textLabel?.text = "From \(trips[indexPath.row].from) To \(trips[indexPath.row].to) on \(trips[indexPath.row].date)"
+
+        cell.textLabel?.text = "\(requesters[indexPath.row].name) Click to see profile"
+        
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //TO DO: Check the ordering
-        
-        tripViewing = trips[indexPath.row]
-        viewingCondition = 0
+        //TO DO:
+
+        driverInfo = requesters[indexPath.row]
         
         NSLog(tripViewing.ownerID)
     }
@@ -148,6 +177,4 @@ class RequestersTableViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
-
 }

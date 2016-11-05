@@ -71,7 +71,8 @@ class TripViewController: UIViewController {
                                                              "price": priceTextField.text!,
                                                              "pickUp": pickTextField.text!,
                                                              "ownerID": userID,
-                                                             "requestList": ""
+                                                             "requestList": "",
+                                                             "riderID": ""
                 ])
             
             self.ref.child("posts").observe(.childAdded, with: { (snapshot) in

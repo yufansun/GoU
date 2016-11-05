@@ -24,21 +24,6 @@ class TripsTableViewController: UITableViewController {
         
         trips = []
         
-//        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
-//        
-//        let userID = FIRAuth.auth()?.currentUser?.uid
-//        self.userRef.child(userID!).observe(.value, with: { (snapshot) in
-//            // Get user value
-//            let key = snapshot.key as? String
-//            let value = snapshot.value as? NSDictionary
-//            myPostList = value?["myPostsList"] as! String
-//            print(myPostList)
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
-        
-
-
         
         self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
             let key  = snapshot.key as String
@@ -54,12 +39,15 @@ class TripsTableViewController: UITableViewController {
             trip.ownerID = value!["ownerID"]! as! String
             trip.price = value!["price"]! as! String
             trip.pickUp = value!["pickUp"]! as! String
+            trip.riderID = value!["riderID"]! as! String
+
 
             
             debugPrint(trip.ownerID)
             // TODO: DO linear search?
             
-            if (trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID) {
+            if ((trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID)
+                && trip.riderID == "") {
                 trips.append(trip)
             }
             

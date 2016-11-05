@@ -419,14 +419,6 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ew-WY-4gd">
-                                <frame key="frameInset" minX="119" minY="448" width="137" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View Driver's profile"/>
-                                <connections>
-                                    <segue destination="AIe-Ii-fAP" kind="show" id="82s-eL-RY6"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0YG-nA-BEh">
                                 <frame key="frameInset" minX="130" minY="468" width="115" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -442,6 +434,14 @@
                                 <state key="normal" title="Go!"/>
                                 <connections>
                                     <action selector="sendRequest:" destination="I81-to-IQV" eventType="touchUpInside" id="XWU-Yu-VaL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ew-WY-4gd">
+                                <frame key="frameInset" minX="44" minY="448" width="282" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="View Driver's profile"/>
+                                <connections>
+                                    <segue destination="AIe-Ii-fAP" kind="show" id="82s-eL-RY6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -465,7 +465,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51v-xd-gE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="71"/>
+            <point key="canvasLocation" x="2360.8000000000002" y="70.614692653673174"/>
         </scene>
         <!--User profile-->
         <scene sceneID="m6X-L8-lUf">
@@ -486,17 +486,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq8-ql-4a0">
+                                <frame key="frameInset" minX="90" minY="521" width="194" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Accept"/>
+                                <connections>
+                                    <action selector="acceptRequest:" destination="AIe-Ii-fAP" eventType="touchUpInside" id="Rlg-PV-cn5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="User profile" id="05L-3p-GUy"/>
                     <connections>
+                        <outlet property="acceptRequest" destination="eq8-ql-4a0" id="U1c-V8-9Ms"/>
                         <outlet property="info" destination="WHP-5I-a93" id="Af1-9d-ouP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYG-T7-nZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3138" y="71"/>
+            <point key="canvasLocation" x="3136.8000000000002" y="70.614692653673174"/>
         </scene>
         <!--Edit Trip-->
         <scene sceneID="Zd5-KZ-nJS">
@@ -711,13 +720,13 @@
         <!--Requesters-->
         <scene sceneID="exR-Pc-gAl">
             <objects>
-                <tableViewController id="iP0-VL-qFB" sceneMemberID="viewController">
+                <tableViewController id="iP0-VL-qFB" customClass="RequestersTableViewController" customModule="GoU" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QrV-vY-OIj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8H0-mo-dt0">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="requesterItem" id="8H0-mo-dt0">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8H0-mo-dt0" id="JHt-XP-ZWl">
@@ -789,7 +798,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0YS-5G-xqF"/>
-        <segue reference="Lhb-Ca-JHc"/>
+        <segue reference="ycS-DS-Obo"/>
         <segue reference="82s-eL-RY6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
