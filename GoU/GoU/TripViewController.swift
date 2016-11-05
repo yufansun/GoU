@@ -105,7 +105,7 @@ class TripViewController: UIViewController {
             //end
             
             let alert = UIAlertController(title: "Thank You",
-                                          message: "Create sucessfully", preferredStyle: .alert)
+                                          message: "Created sucessfully", preferredStyle: .alert)
             let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)

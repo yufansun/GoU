@@ -139,7 +139,7 @@ class TripDetailViewController: UIViewController {
         
         
         let alert = UIAlertController(title: "Thank You",
-                                      message: "Send request to driver sucessfully!", preferredStyle: .alert)
+                                      message: "Sent request to driver successfully!", preferredStyle: .alert)
         let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)

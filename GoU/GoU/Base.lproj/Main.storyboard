@@ -505,11 +505,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHP-5I-a93">
-                                <frame key="frameInset" minX="16" minY="80" width="343" height="522"/>
+                            <label opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Profile" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHP-5I-a93">
+                                <frame key="frameInset" minX="16" minY="80" width="360" height="530"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -611,7 +611,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMy-Ks-7It">
-                                <frame key="frameInset" minX="61" minY="449" width="51" height="21"/>
+                                <frame key="frameInset" minX="61" minY="467" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -632,14 +632,14 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QuZ-8F-jao">
-                                <frame key="frameInset" minX="61.93%" minY="70.02%" width="157" height="30"/>
+                                <frame key="frameInset" minX="61.93%" minY="73.16%" width="157" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPw-Zl-rSb">
-                                <frame key="frameInset" minX="135" minY="505" width="120" height="40"/>
+                                <frame key="frameInset" minX="135" minY="524" width="120" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -671,7 +671,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gua-9R-MTj" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Browse" image="car" id="DOU-Nt-sg4">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="-50" vertical="0.0"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-40" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="w2w-Zf-8ST">
@@ -773,7 +773,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sDd-I8-QrY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="-3" title="Profile" image="Profile" id="cPa-gy-q4n">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="50" vertical="0.0"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-20" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nfl-Ab-cfr">
@@ -793,7 +793,9 @@
         <scene sceneID="iZm-7b-ouc">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kZj-AM-JIO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Trips" image="list" id="sP9-BH-7SA"/>
+                    <tabBarItem key="tabBarItem" title="Trips" image="list" id="sP9-BH-7SA">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-30" vertical="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rq5-kR-zgY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -814,7 +816,7 @@
         <image name="Profile" width="37" height="37"/>
         <image name="car" width="37" height="37"/>
         <image name="goulogo1" width="171" height="106"/>
-        <image name="list" width="40" height="40"/>
+        <image name="list" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Lhb-Ca-JHc"/>
