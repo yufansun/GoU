@@ -19,7 +19,7 @@ class TripsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         
         trips = []

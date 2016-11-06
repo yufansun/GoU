@@ -35,7 +35,7 @@ class TripViewController: UIViewController {
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func didReceiveMemoryWarning() {

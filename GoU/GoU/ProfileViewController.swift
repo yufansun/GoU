@@ -27,6 +27,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var languageSecondTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    //driver
+    @IBOutlet weak var driverSwitch: UISwitch!
+    @IBOutlet weak var carTypeLabel: UILabel!
     // MARK: Properties
     var ref: FIRDatabaseReference!
     var messages: [FIRDataSnapshot]! = []
@@ -64,6 +69,10 @@ class ProfileViewController: UIViewController {
         usernameLabel.text = name
         emailTextField.text = email
         
+        //user not willing to be a driver
+        if (!driverSwitch.isOn) {
+            
+        }
         ref.child("commonProfiles").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
@@ -86,6 +95,9 @@ class ProfileViewController: UIViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+        // hide keyboard
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func didReceiveMemoryWarning() {
@@ -199,5 +211,8 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    
 }
+
+
 

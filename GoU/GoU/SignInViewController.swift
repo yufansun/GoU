@@ -29,6 +29,7 @@ class SignInViewController: UIViewController {
         if let user = FIRAuth.auth()?.currentUser {
             self.signedIn(user)
         }
+        self.hideKeyboardWhenTappedAround()
     }
     
     @IBAction func didTapSignIn(_ sender: AnyObject) {
@@ -38,15 +39,15 @@ class SignInViewController: UIViewController {
         
         guard let email = emailField.text, let password = passwordField.text else { return }
         
-//        FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
-//            if let error = error {
-//                self.showAlert(message: error.localizedDescription)
-//                
-//                print(error.localizedDescription)
-//                return
-//            }
-//            self.signedIn(user!)
-//        }
+        FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
+            if let error = error {
+                self.showAlert(message: error.localizedDescription)
+                
+                print(error.localizedDescription)
+                return
+            }
+            self.signedIn(user!)
+        }
     }
     
     func isValidEmail(testStr:String) -> Bool {
