@@ -52,6 +52,7 @@ class MyTripsTableViewController: UITableViewController {
                 trip.ownerID = (value![currTrip]! as! NSDictionary)["ownerID"]! as! String
                 trip.price = (value![currTrip]! as! NSDictionary)["price"]! as! String
                 trip.pickUp = (value![currTrip]! as! NSDictionary)["pickUp"]! as! String
+                trip.riderID = (value![currTrip]! as! NSDictionary)["riderID"]! as! String
                 self.tripRequests = (value![currTrip]! as! NSDictionary)["requestList"]! as! String
                 
                 let requestArr = self.tripRequests.components(separatedBy: ",")
@@ -87,54 +88,6 @@ class MyTripsTableViewController: UITableViewController {
             print(error.localizedDescription)
         }
 
-        
-//        self.ref = FIRDatabase.database().reference(withPath: "messages")
-//        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
-//                
-//        let postArr = myPostList.components(separatedBy: ",")
-//        print(postArr)
-//
-//        
-//        myTrips = []
-//        
-//        for myTripID in postArr {
-//            if (myTripID != "") {
-//            self.ref.child("posts").child(myTripID).observe(.value, with: { (snapshot) in
-//                let key  = snapshot.key as String
-//                let value = snapshot.value as? NSDictionary
-//                debugPrint("hello")
-//                debugPrint(key)
-//                trip.from = value!["from"]! as! String
-//                trip.to = value!["to"]! as! String
-//                trip.date = value!["date"]! as! String
-//                trip.seats = value!["seats"]! as! String
-//                trip.notes = value!["notes"]! as! String
-//                trip.tripID = key as! String
-//                trip.ownerID = value!["ownerID"]! as! String
-//                trip.price = value!["price"]! as! String
-//                trip.pickUp = value!["pickUp"]! as! String
-//                
-//                
-//                //            debugPrint(trip.ownerID)
-//                // TODO: DO linear search?
-//                
-//                if (myTrips.isEmpty || myTrips[myTrips.endIndex - 1].tripID != trip.tripID) {
-//                    myTrips.append(trip)
-//                }
-//                
-//                self.tableView.delegate = self
-//                self.tableView.dataSource = self
-//                self.tableView.reloadData()
-//                
-//                
-//                
-//            }) { (error) in
-//                print(error.localizedDescription)
-//            }
-//            }
-//
-//        }
-//        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -210,12 +163,13 @@ class MyTripsTableViewController: UITableViewController {
             //My posts
             viewingCondition = 1
             tripViewing = myTrips[indexPath.row]
-            
+                        
         }
         if (mySegment.selectedSegmentIndex == 1){
             //My requests
             viewingCondition = 2
             tripViewing = myRequests[indexPath.row]
+            
         }
         
         NSLog(tripViewing.ownerID)

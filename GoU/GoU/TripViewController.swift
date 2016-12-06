@@ -19,6 +19,13 @@ class TripViewController: UIViewController {
     @IBOutlet weak var pickTextField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     
+    @IBOutlet weak var negotiateLabel: UILabel!
+    
+    @IBOutlet weak var ifPickup: UISwitch!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    
+    
     var ref: FIRDatabaseReference!
     var rootRef: FIRDatabaseReference!
     var posts: [FIRDataSnapshot]! = []
@@ -28,14 +35,22 @@ class TripViewController: UIViewController {
     var storageRef: FIRStorageReference!
     var remoteConfig: FIRRemoteConfig!
     
+    var ifPickUpFlag: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView = UIScrollView(frame: view.bounds)
+        
+        // hide keyboard
+        self.hideKeyboardWhenTappedAround()
+        
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.hideKeyboardWhenTappedAround()
+        self.ifPickup.setOn(false, animated: true)
+        ifPickUpFlag = false
+        self.pickTextField.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,12 +61,30 @@ class TripViewController: UIViewController {
     }
     
     
+    @IBAction func tapIfPickUp(_ sender: AnyObject) {
+        if (ifPickUpFlag == true){
+            ifPickUpFlag = false
+            self.ifPickup.setOn(false, animated: true)
+            self.pickTextField.isHidden = true
+            self.negotiateLabel.isHidden = false
+            self.pickTextField.text = ""
+        } else{
+            ifPickUpFlag = true
+            self.ifPickup.setOn(true, animated: true)
+            self.pickTextField.isHidden = false
+            self.negotiateLabel.isHidden = true
+            self.pickTextField.text = ""
+        }
+    }
     
     
     @IBAction func submitTrip(_ sender: UIButton) {
         let userID = (FIRAuth.auth()?.currentUser?.uid)! as String
         
-    
+        if(!pickTextField.isHidden && self.pickTextField.text == "")
+        {
+            showAlert()
+        }
         
         if ((fromTextField.text?.isEmpty)! || (toTextField.text?.isEmpty)! ||
             (dateTextField.text?.isEmpty)! || (seatsTextField.text?.isEmpty)! ||
@@ -59,9 +92,12 @@ class TripViewController: UIViewController {
         {
             showAlert()
         }
-            
         else
         {
+            if (pickTextField.isHidden)
+            {
+                pickTextField.text = "Negotiate with rider"
+            }
             let postKey = ref.child("posts").childByAutoId().key as String
             self.ref.child("posts").child(postKey).setValue(["from": fromTextField.text!,
                                                              "to": toTextField.text!,
@@ -71,18 +107,9 @@ class TripViewController: UIViewController {
                                                              "price": priceTextField.text!,
                                                              "pickUp": pickTextField.text!,
                                                              "ownerID": userID,
-                                                             "requestList": ""
+                                                             "requestList": "",
+                                                             "riderID": ""
                 ])
-            
-            self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
-                let key  = snapshot.key as String
-                let value = snapshot.value as? NSDictionary
-                debugPrint("hello")
-                debugPrint(key)
-                
-            }) { (error) in
-                print(error.localizedDescription)
-            }
             
             //chenhao's code
             //Note: I use the postKey here!!!
@@ -105,8 +132,8 @@ class TripViewController: UIViewController {
             //end
             
             let alert = UIAlertController(title: "Thank You",
-                                          message: "Created sucessfully", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+                                          message: "Create sucessfully", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Awesome", style: .default, handler: {(alert: UIAlertAction!) in self.showNextView()})
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
             
@@ -121,6 +148,14 @@ class TripViewController: UIViewController {
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func showNextView()
+    {
+        //let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "MyTripsTableViewController") as! MyTripsTableViewController
+        //self.present(next, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(nextVC, animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }

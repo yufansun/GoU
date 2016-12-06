@@ -13,37 +13,59 @@ class RequestersTableViewController: UITableViewController {
 
     var ref: FIRDatabaseReference!
     var userRef: FIRDatabaseReference!
+    var tripRequests = ""
+    var requesters = [DriverViewProfile]()
+    var trip = Trip()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // hide keyboard
+        self.hideKeyboardWhenTappedAround()
+        
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
         
-        trips = []
         
-        self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
-            let key  = snapshot.key as String
+        self.userRef.observe(.value, with: { (snapshot) in
+            self.requesters = []
+            
             let value = snapshot.value as? NSDictionary
+            let userKeys = value?.allKeys as! [String]
             debugPrint("hello")
-            debugPrint(key)
-            trip.from = value!["from"]! as! String
-            trip.to = value!["to"]! as! String
-            trip.date = value!["date"]! as! String
-            trip.seats = value!["seats"]! as! String
-            trip.notes = value!["notes"]! as! String
-            trip.tripID = key as! String
-            trip.ownerID = value!["ownerID"]! as! String
-            trip.price = value!["price"]! as! String
-            trip.pickUp = value!["pickUp"]! as! String
             
-            
-            debugPrint(trip.ownerID)
-            // TODO: DO linear search?
-            
-            if (trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID) {
-                trips.append(trip)
+            for currUser in userKeys{
+                let saved = (value![currUser]! as! NSDictionary)["saved"]! as! String
+                if (saved == "TRUE") {
+                    var requester = DriverViewProfile()
+                    let firstName = (value![currUser]! as! NSDictionary)["firstName"]! as! String
+                    let lastName = (value![currUser]! as! NSDictionary)["lastName"]! as! String
+                    requester.gender = (value![currUser]! as! NSDictionary)["gender"]! as! String
+                    let city = (value![currUser]! as! NSDictionary)["currentCityName"]! as! String
+                    let state = (value![currUser]! as! NSDictionary)["currentStateName"]! as! String
+                    let country = (value![currUser]! as! NSDictionary)["currentCountryName"]! as! String
+                    requester.email = (value![currUser]! as! NSDictionary)["emailAddress"]! as! String
+                    requester.phone = (value![currUser]! as! NSDictionary)["phoneNumber"]! as! String
+                    requester.aboutme = (value![currUser]! as! NSDictionary)["aboutMe"]! as! String
+                    requester.userID = (value![currUser]! as! NSDictionary)["userId"]! as! String
+                    self.tripRequests = (value![currUser]! as! NSDictionary)["myRequestsList"]! as! String
+                    
+                    
+                    requester.name = firstName + " " + lastName
+                    requester.loc = city + ", " + state + ", " + country
+                    
+                    let requestsArr = self.tripRequests.components(separatedBy: ",")
+                    
+                    // TODO: DO linear search?
+                    
+                    if (requestsArr.contains(self.trip.tripID)) {
+                        self.requesters.append(requester)
+                    }
+                }
+                
+                
             }
+            
             
             self.tableView.delegate = self
             self.tableView.dataSource = self
@@ -61,9 +83,26 @@ class RequestersTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.hideKeyboardWhenTappedAround()
+        
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = self.tableView.indexPathForSelectedRow
+        let temp = segue.identifier
+        print(temp)
+        if(segue.identifier == "Requesters2Profile") {
+            if let destination = segue.destination as? DriverProfileViewController {
+                
+                destination.myProfile = self.requesters[(indexPath?.row)!]
+                destination.driverFlag = false
+                destination.trip = self.trip
+                print(1)
+            }
+        }
+
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -79,28 +118,40 @@ class RequestersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return trips.count
+        var numRows = 0
+
+        numRows = self.requesters.count
+        print(numRows)
+
+        return numRows
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TripItem", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "requesterItem", for: indexPath)
         
-        cell.textLabel?.text = "From \(trips[indexPath.row].from) To \(trips[indexPath.row].to) on \(trips[indexPath.row].date)"
+
+        cell.textLabel?.text = "\(self.requesters[indexPath.row].name) "
+        
+        cell.detailTextLabel?.text = "View Profile"
+        
+//        cell.detailTextLabel?.text = "0 Requester"
+//        
+//        if (requesters[indexPath.row].userID == tripViewing.riderID){
+//        }
+//        
+        
+        
+
+        
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //TO DO: Check the ordering
-        
-        tripViewing = trips[indexPath.row]
-        viewingCondition = 0
-        
-        NSLog(tripViewing.ownerID)
+
     }
     
     
@@ -148,6 +199,4 @@ class RequestersTableViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
-
 }
