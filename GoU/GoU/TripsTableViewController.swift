@@ -16,63 +16,54 @@ class TripsTableViewController: UITableViewController {
     
     var ref: FIRDatabaseReference!
     var userRef: FIRDatabaseReference!
+    var trips = [Trip]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.ref = FIRDatabase.database().reference(withPath: "messages")
         
-        trips = []
         
-//        self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
-//        
-//        let userID = FIRAuth.auth()?.currentUser?.uid
-//        self.userRef.child(userID!).observe(.value, with: { (snapshot) in
-//            // Get user value
-//            let key = snapshot.key as? String
-//            let value = snapshot.value as? NSDictionary
-//            myPostList = value?["myPostsList"] as! String
-//            print(myPostList)
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
-        
-
-
-        
-        self.ref.child("posts").observe(.childAdded, with: { (snapshot) in
+        self.ref.child("posts").observe(.value, with: { (snapshot) in
+            self.trips = []
             let key  = snapshot.key as String
             let value = snapshot.value as? NSDictionary
-            debugPrint("hello")
-            debugPrint(key)
-            trip.from = value!["from"]! as! String
-            trip.to = value!["to"]! as! String
-            trip.date = value!["date"]! as! String
-            trip.seats = value!["seats"]! as! String
-            trip.notes = value!["notes"]! as! String
-            trip.tripID = key as! String
-            trip.ownerID = value!["ownerID"]! as! String
-            trip.price = value!["price"]! as! String
-            trip.pickUp = value!["pickUp"]! as! String
-
+            if (value != nil) {
+                let tripKeys = value?.allKeys as! [String]
+                debugPrint("hello")
+                debugPrint(key)
             
-            debugPrint(trip.ownerID)
-            // TODO: DO linear search?
-            
-            if (trips.isEmpty || trips[trips.endIndex - 1].tripID != trip.tripID) {
-                trips.append(trip)
+                for currTrip in tripKeys{
+                    var trip = Trip()
+                    trip.from = (value![currTrip]! as! NSDictionary)["from"]! as! String
+                    trip.to = (value![currTrip]! as! NSDictionary)["to"]! as! String
+                    trip.date = (value![currTrip]! as! NSDictionary)["date"]! as! String
+                    trip.seats = (value![currTrip]! as! NSDictionary)["seats"]! as! String
+                    trip.notes = (value![currTrip]! as! NSDictionary)["notes"]! as! String
+                    trip.tripID = currTrip
+                    trip.ownerID = (value![currTrip]! as! NSDictionary)["ownerID"]! as! String
+                    trip.price = (value![currTrip]! as! NSDictionary)["price"]! as! String
+                    trip.pickUp = (value![currTrip]! as! NSDictionary)["pickUp"]! as! String
+                    trip.riderID = (value![currTrip]! as! NSDictionary)["riderID"]! as! String
+                
+                    debugPrint(trip.ownerID)
+                    // TODO: DO linear search?
+                    if (trip.riderID == "") {
+                        self.trips.append(trip)
+                    }
+                }
             }
             
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.reloadData()
- 
+
+                
             
             
         }) { (error) in
             print(error.localizedDescription)
         }
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -82,6 +73,21 @@ class TripsTableViewController: UITableViewController {
         
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = self.tableView.indexPathForSelectedRow
+        let temp = segue.identifier
+        print(temp)
+        if(segue.identifier == "TripsTable2TripDetail") {
+            if let destination = segue.destination as? TripDetailViewController {
+                
+                destination.myTrip = self.trips[(indexPath?.row)!]
+                destination.viewingCondition = 0
+                print(1)
+            }
+        }
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,7 +103,7 @@ class TripsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return trips.count
+        return self.trips.count
     }
     
     
@@ -106,19 +112,19 @@ class TripsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TripItem", for: indexPath)
         
-        cell.textLabel?.text = "From \(trips[indexPath.row].from) To \(trips[indexPath.row].to) on \(trips[indexPath.row].date)"
+        cell.textLabel?.text = "\(self.trips[indexPath.row].from) - \(self.trips[indexPath.row].to) - \(self.trips[indexPath.row].date)"
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //TO DO: Check the ordering
+    }
+    
+    
+    @IBAction func refresh(_ sender: AnyObject) {
         
-        tripViewing = trips[indexPath.row]
-        viewingCondition = 0
-        
-        NSLog(tripViewing.ownerID)
+        self.tableView.reloadData()
     }
     
     

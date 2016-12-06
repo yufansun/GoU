@@ -20,8 +20,8 @@
 		17D1803F1DA57D6600735567 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1803E1DA57D6600735567 /* TripViewController.swift */; };
 		327F1E670B4241841C412612 /* Pods_GoU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5AC56202FEF12C90648384 /* Pods_GoU.framework */; };
 		663B742A1DB6CAB3006ABACD /* TripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */; };
-		663CC1E81DCB93C600662B20 /* MyTripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */; };
 		66685BC41DC706C000BF35BF /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66685BC31DC706C000BF35BF /* TripDetailViewController.swift */; };
+		66EB4DBB1DCDB038002C2ED9 /* MyTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EB4DBA1DCDB038002C2ED9 /* MyTripsViewController.swift */; };
 		83CA04081DC65C77000562FA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA04071DC65C77000562FA /* Constants.swift */; };
 		FA1B653C1DCBCB8E00D44EC2 /* DriverProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B653B1DCBCB8E00D44EC2 /* DriverProfileViewController.swift */; };
 		FAC0F9F81DCD164000D99C35 /* RequestersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0F9F71DCD164000D99C35 /* RequestersTableViewController.swift */; };
@@ -43,8 +43,8 @@
 		17D180381DA4B02A00735567 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17D1803E1DA57D6600735567 /* TripViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsTableViewController.swift; sourceTree = "<group>"; };
-		663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTripsTableViewController.swift; sourceTree = "<group>"; };
 		66685BC31DC706C000BF35BF /* TripDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
+		66EB4DBA1DCDB038002C2ED9 /* MyTripsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTripsViewController.swift; sourceTree = "<group>"; };
 		83CA04071DC65C77000562FA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BC5AC56202FEF12C90648384 /* Pods_GoU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoU.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-GoU/Pods-GoU.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,9 +91,9 @@
 				17D1802E1DA4B02A00735567 /* ProfileViewController.swift */,
 				83CA04071DC65C77000562FA /* Constants.swift */,
 				17D180301DA4B02A00735567 /* Main.storyboard */,
+				66EB4DBA1DCDB038002C2ED9 /* MyTripsViewController.swift */,
 				FAC0F9F71DCD164000D99C35 /* RequestersTableViewController.swift */,
 				663B74291DB6CAB3006ABACD /* TripsTableViewController.swift */,
-				663CC1E71DCB93C600662B20 /* MyTripsTableViewController.swift */,
 				17D180331DA4B02A00735567 /* Assets.xcassets */,
 				17D180351DA4B02A00735567 /* LaunchScreen.storyboard */,
 				17D180381DA4B02A00735567 /* Info.plist */,
@@ -131,7 +131,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17D1803B1DA4B02A00735567 /* Build configuration list for PBXNativeTarget "GoU" */;
 			buildPhases = (
-				2E7A555709FCA1A46C8350FD /* [CP] Check Pods Manifest.lock */,
 				2CF28ACE4345E31288A64A18 /* [CP] Check Pods Manifest.lock */,
 				92DA6F30D76B164A9DDD4B06 /* [CP] Check Pods Manifest.lock */,
 				17D180231DA4B02A00735567 /* Sources */,
@@ -163,7 +162,7 @@
 				TargetAttributes = {
 					17D180261DA4B02A00735567 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = BBRCWABZFX;
+						DevelopmentTeam = TVJGN379B2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -243,21 +242,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		2E7A555709FCA1A46C8350FD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
@@ -318,12 +302,12 @@
 				17D1802F1DA4B02A00735567 /* ProfileViewController.swift in Sources */,
 				FAC0F9F81DCD164000D99C35 /* RequestersTableViewController.swift in Sources */,
 				66685BC41DC706C000BF35BF /* TripDetailViewController.swift in Sources */,
-				663CC1E81DCB93C600662B20 /* MyTripsTableViewController.swift in Sources */,
 				172E72F71DAB170B0024BBD2 /* AppState.swift in Sources */,
 				172E72F51DAB16D00024BBD2 /* MeasurementHelper.swift in Sources */,
 				17D1802B1DA4B02A00735567 /* AppDelegate.swift in Sources */,
 				663B742A1DB6CAB3006ABACD /* TripsTableViewController.swift in Sources */,
 				172E72F31DAB13EE0024BBD2 /* SignInViewController.swift in Sources */,
+				66EB4DBB1DCDB038002C2ED9 /* MyTripsViewController.swift in Sources */,
 				17D1802D1DA4B02A00735567 /* BrowseViewController.swift in Sources */,
 				83CA04081DC65C77000562FA /* Constants.swift in Sources */,
 			);
@@ -449,12 +433,17 @@
 			baseConfigurationReference = DFD98FACF111EE60E9AE74D8 /* Pods-GoU.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BBRCWABZFX;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yufan Sun (TVJGN379B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = TVJGN379B2;
 				INFOPLIST_FILE = GoU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jiaqi.GoU;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yufansun.GoU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a9f4c6c-eef0-4339-8aa2-445596fa302a";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -463,12 +452,17 @@
 			baseConfigurationReference = 0A7C8BDBA0DC83B3AD38947E /* Pods-GoU.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BBRCWABZFX;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yufan Sun (TVJGN379B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = TVJGN379B2;
 				INFOPLIST_FILE = GoU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jiaqi.GoU;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yufansun.GoU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a9f4c6c-eef0-4339-8aa2-445596fa302a";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

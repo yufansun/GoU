@@ -11,7 +11,7 @@ import UIKit
 
 import Firebase
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var firstnameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var genderTextField: UITextField!
@@ -21,17 +21,21 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var currentStateTextField: UITextField!
     @IBOutlet weak var currentCityTextField: UITextField!
     @IBOutlet weak var majorTextField: UITextField!
-    @IBOutlet weak var languageFirstTextField: UITextField!
     
-    @IBOutlet weak var aboutMeTextField: UITextView!
-    @IBOutlet weak var languageSecondTextField: UITextField!
+    
+    @IBOutlet weak var aboutMeTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var genderPicker: UIPickerView!
     
-    //driver
-    @IBOutlet weak var driverSwitch: UISwitch!
-    @IBOutlet weak var carTypeLabel: UILabel!
+    @IBOutlet weak var profilePhoto: UIImageView!
+    @IBOutlet weak var profilePhotoButton: UIButton!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var vehicleInfoView: UIView!
+    @IBOutlet weak var isDriverSwitch: UISwitch!
+    @IBOutlet weak var vehicleModelTextField: UITextField!
+    @IBOutlet weak var vehicleYearTextField: UITextField!
     // MARK: Properties
     var ref: FIRDatabaseReference!
     var messages: [FIRDataSnapshot]! = []
@@ -42,20 +46,21 @@ class ProfileViewController: UIViewController {
     var remoteConfig: FIRRemoteConfig!
     var uid: String = ""
     
+    var genderOptions = ["Female", "Male", "Other"]
+    
+    var isDriver = "FALSE"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // hide keyboard
+        self.hideKeyboardWhenTappedAround()
+        
         // make the view scrollable
         scrollView = UIScrollView(frame: view.bounds)
-        //var cellViewFrame: UIView?
-        //cellViewFrame = UIView(frame: CGRect( x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height + 120))
-        //scrollView.contentSize = (cellViewFrame?.bounds.size)!
-        
-        // Do any additional setup after loading the view, typically from a nib.
+
         configureDatabase()
         configureStorage()
-        configureRemoteConfig()
-        fetchConfig()
-        logViewLoaded()
         var name = ""
         var email = ""
         if let user = FIRAuth.auth()?.currentUser {
@@ -69,35 +74,50 @@ class ProfileViewController: UIViewController {
         usernameLabel.text = name
         emailTextField.text = email
         
-        //user not willing to be a driver
-        if (!driverSwitch.isOn) {
-            
-        }
+        self.setVehicleView(isHide: "TRUE")
+        
+        profilePhotoButton.window?.windowLevel = CGFloat.greatestFiniteMagnitude
         ref.child("commonProfiles").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             let saved = value?["saved"] as! String
             if (saved == "TRUE") {
-                self.firstnameTextField.text = value?["firstName"] as! String
-                self.lastNameTextField.text = value?["lastName"] as! String
-                self.genderTextField.text = value?["gender"] as! String
-                self.emailTextField.text = value?["emailAddress"] as! String
-                self.phoneTextField.text = value?["phoneNumber"] as! String
-                self.currentCountryTextField.text = value?["currentCountryName"] as! String
+                self.firstnameTextField.text = value?["firstName"] as? String
+                self.lastNameTextField.text = value?["lastName"] as? String
+                self.genderTextField.text = value?["gender"] as? String
+                self.emailTextField.text = value?["emailAddress"] as? String
+                self.phoneTextField.text = value?["phoneNumber"] as? String
+                self.currentCountryTextField.text = value?["currentCountryName"] as? String
                 self.currentStateTextField.text = value?["currentStateName"] as! String
                 self.currentCityTextField.text = value?["currentCityName"] as! String
                 self.majorTextField.text = value?["majorField"] as! String
                 self.aboutMeTextField.text = value?["aboutMe"] as! String
                 let phoneNumber = value?["phoneNumber"] as! String
-                print("&&&&&&&&")
-                print(phoneNumber)
+                
+                self.isDriver = value?["isDriver"] as! String
+                if (self.isDriver == "TRUE") {
+                    self.isDriverSwitch.setOn(true, animated: true)
+                    self.setVehicleView(isHide: "False")
+                    self.vehicleModelTextField.text = value?["vehicleModel"] as? String
+                    self.vehicleYearTextField.text = value?["vehicleYear"] as? String
+                } else {
+                    self.isDriverSwitch.setOn(false, animated: true)
+                    self.setVehicleView(isHide: "TRUE")
+                }
+                
             }
         }) { (error) in
             print(error.localizedDescription)
         }
         
-        // hide keyboard
-        self.hideKeyboardWhenTappedAround()
+        updateProfilePhotoView()
+        
+        //picker
+        var genderPickerView = UIPickerView()
+        
+        genderPickerView.delegate = self
+        
+        genderTextField.inputView = genderPickerView
     }
     
     override func didReceiveMemoryWarning() {
@@ -118,29 +138,11 @@ class ProfileViewController: UIViewController {
     
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
-        //TODO: fetch user profile to local variable if already has profile
-        // Listen for new messages in the Firebase database
-        //        _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
-        //            guard let strongSelf = self else { return }
-        //            strongSelf.messages.append(snapshot)
-        //            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-        //            })
-        
     }
     
     func configureStorage() {
         storageRef = FIRStorage.storage().reference(forURL: "gs://gou-app-94faa.appspot.com")
     }
-    
-    func configureRemoteConfig() {
-    }
-    
-    func fetchConfig() {
-    }
-    
-    func logViewLoaded() {
-    }
-    
     
     @IBAction func didTapSave(_ sender: AnyObject) {
         if (firstnameTextField.text! == "" || lastNameTextField.text! == "" ||
@@ -179,8 +181,12 @@ class ProfileViewController: UIViewController {
                 data[Constants.CommonProfileFields.saved] = "TRUE"
                 data[Constants.CommonProfileFields.myPostsList] = postList
                 data[Constants.CommonProfileFields.myRequestsList] = requestList
-                data[Constants.CommonProfileFields.isDriver] = "FALSE"//TODO: JUST FOR NOW
+                data[Constants.CommonProfileFields.isDriver] = self.isDriver
                 
+                if (self.isDriver == "TRUE") {
+                    data[Constants.DriverProfileFields.vehicleModel] = self.vehicleModelTextField.text!
+                    data[Constants.DriverProfileFields.vehicleYear] = self.vehicleYearTextField.text!
+                }
                 self.sendMessage(withData: data)
             }) { (error) in
                 print(error.localizedDescription)
@@ -197,10 +203,108 @@ class ProfileViewController: UIViewController {
         
     }
     
+    @IBAction func didTapEditProfilePhoto(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
+            picker.sourceType = UIImagePickerControllerSourceType.camera
+        } else {
+            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        }
+        
+        present(picker, animated: true, completion:nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion:nil)
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+        
+        // if it's a photo from the library, not an image from the camera
+        if #available(iOS 8.0, *), let referenceURL = info[UIImagePickerControllerReferenceURL] {
+            let assets = PHAsset.fetchAssets(withALAssetURLs: [referenceURL as! URL], options: nil)
+            let asset = assets.firstObject
+            asset?.requestContentEditingInput(with: nil, completionHandler: { [weak self] (contentEditingInput, info) in
+                let imageFile = contentEditingInput?.fullSizeImageURL
+                let filePath = "\(uid)/\(Int(Date.timeIntervalSinceReferenceDate * 1000))/\((referenceURL as AnyObject).lastPathComponent!)"
+                guard let strongSelf = self else { return }
+                strongSelf.storageRef.child(filePath)
+                    .putFile(imageFile!, metadata: nil) { (metadata, error) in
+                        if let error = error {
+                            let nsError = error as NSError
+                            print("Error uploading: \(nsError.localizedDescription)")
+                            return
+                        }
+                        var data = [Constants.CommonProfileFields.userId: self?.uid]
+                        data[Constants.CommonProfileFields.hasProfilePhoto] = "TRUE"
+                        data[Constants.CommonProfileFields.profilePhotoURL] = strongSelf.storageRef.child((metadata?.path)!).description
+                        strongSelf.updateProfilePhoto(withData: data as! [String : String])
+                }
+            })
+        } else {
+            guard let image = info[UIImagePickerControllerOriginalImage] as! UIImage? else { return }
+            let imageData = UIImageJPEGRepresentation(image, 0.8)
+            let imagePath = "\(uid)/\(Int(Date.timeIntervalSinceReferenceDate * 1000)).jpg"
+            let metadata = FIRStorageMetadata()
+            metadata.contentType = "image/jpeg"
+            self.storageRef.child(imagePath)
+                .put(imageData!, metadata: metadata) { [weak self] (metadata, error) in
+                    if let error = error {
+                        print("Error uploading: \(error)")
+                        return
+                    }
+                    guard let strongSelf = self else { return }
+                    var data = [Constants.CommonProfileFields.userId: self?.uid]
+                    data[Constants.CommonProfileFields.hasProfilePhoto] = "TRUE"
+                    data[Constants.CommonProfileFields.profilePhotoURL] = strongSelf.storageRef.child((metadata?.path)!).description
+                    strongSelf.updateProfilePhoto(withData: data as! [String : String])
+            }
+        }
+    }
+    
+    
+    
     func sendMessage(withData data: [String: String]) {
         var mdata = data
         // Push data to Firebase Database
         self.ref.child("commonProfiles").child(uid).setValue(mdata)
+    }
+    
+    func updateProfilePhoto(withData data: [String: String]) {
+        var mdata = data
+        // Push data to Firebase Database
+        self.ref.child("commonProfiles").child("profilePhoto").child(uid).setValue(mdata)
+        updateProfilePhotoView()
+    }
+    
+    func updateProfilePhotoView() {
+        ref.child("commonProfiles").child("profilePhoto").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            let hasProfilePhoto = value?["hasProfilePhoto"] as! String
+            if (hasProfilePhoto == "TRUE") {
+                let imageURL = value?[Constants.CommonProfileFields.profilePhotoURL]
+                //if let imageURL = value?[Constants.CommonProfileFields.profilePhotoURL] {
+                if (imageURL as AnyObject).hasPrefix("gs://") {
+                    FIRStorage.storage().reference(forURL: imageURL as! String).data(withMaxSize: INT64_MAX){ (data, error) in
+                        if let error = error {
+                            print("Error downloading: \(error)")
+                            return
+                        }
+                        self.profilePhoto?.image = UIImage.init(data: data!)
+                    }
+                } else if let URL = URL(string: imageURL as! String), let data = try? Data(contentsOf: URL) {
+                    self.profilePhoto?.image = UIImage.init(data: data)
+                }
+            }
+            else {
+                self.profilePhoto?.image = UIImage(named: "ic_account_circle")
+            }
+            
+            // }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func showAlert() {
@@ -211,8 +315,49 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK: picker
+    // returns the number of 'columns' to display.
+    func numberOfComponents(in pickerView: UIPickerView) -> Int{
+        return 1
+    }
+    
+    // returns the # of rows in each component..
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        return genderOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return genderOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        genderTextField.text = genderOptions[row]
+    }
+    
+    //MARK: Vehicle info
+    @IBAction func didTapIsDriverSwitch(_ sender: Any) {
+        if (self.isDriver == "TRUE") {
+            self.isDriver = "FALSE"
+            self.isDriverSwitch.setOn(false, animated: true)
+            self.setVehicleView(isHide: "TRUE")
+        } else {
+            self.isDriver = "TRUE"
+            self.isDriverSwitch.setOn(true, animated: true)
+            self.setVehicleView(isHide: "FALSE")
+        }
+    }
+    
+    func setVehicleView (isHide: String) {
+        if (isHide == "TRUE") {
+            self.vehicleInfoView.isHidden = true
+            self.saveButton.frame = CGRect.init(x: 190.0, y: 750.0, width: 160.0, height: 40.0)
+        } else {
+            self.vehicleInfoView.isHidden = false
+            self.saveButton.frame = CGRect.init(x: 190.0, y: 900.0, width: 160.0, height: 40.0)
+        }
+    }
+    
+    
     
 }
-
-
 

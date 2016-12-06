@@ -6,6 +6,8 @@
 //  Copyright © 2016 SunYufan. All rights reserved.
 //
 
+// TODO: dynamic button go to rider's profile
+
 import UIKit
 import Firebase
 
@@ -19,15 +21,15 @@ class TripDetailViewController: UIViewController {
     
     var userRef: FIRDatabaseReference!
     var ref: FIRDatabaseReference!
-    
-    var tempTrip = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
+    var driverProfile = DriverViewProfile()
+    var myTrip = Trip()
+    var viewingCondition: Int!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.setNeedsDisplay()
-        tempTrip = tripViewing
         
         viewDriverProfileButton.isHidden = true
         viewRequestersButton.isHidden = true
@@ -35,43 +37,52 @@ class TripDetailViewController: UIViewController {
         
         
         self.userRef = FIRDatabase.database().reference(withPath: "commonProfiles")
-        self.userRef.child(tripViewing.ownerID).observe(.value, with: { (snapshot) in
-            let key  = snapshot.key as String
+        
+        self.userRef.child(self.myTrip.ownerID).observe(.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let firstName = value!["firstName"]! as! String
             let lastName = value!["lastName"]! as! String
-            driverInfo.gender = value!["gender"]! as! String
+            self.driverProfile.gender = value!["gender"]! as! String
             let city = value!["currentCityName"]! as! String
             let state = value!["currentStateName"]! as! String
             let country = value!["currentCountryName"]! as! String
-            driverInfo.email = value!["emailAddress"]! as! String
-            driverInfo.phone = value!["phoneNumber"]! as! String
-            driverInfo.aboutme = value!["aboutMe"]! as! String
+            self.driverProfile.email = value!["emailAddress"]! as! String
+            self.driverProfile.phone = value!["phoneNumber"]! as! String
+            self.driverProfile.aboutme = value!["aboutMe"]! as! String
             
-            driverInfo.name = firstName + " " + lastName
-            driverInfo.loc = city + ", " + state + ", " + country
+            self.driverProfile.name = firstName + " " + lastName
+            self.driverProfile.loc = city + ", " + state + ", " + country
+            self.driverProfile.userID = self.myTrip.ownerID
             print("a")
             
         }) { (error) in
             print(error.localizedDescription)
         }
-
         
-        if(viewingCondition == 0){
+        self.ref = FIRDatabase.database().reference(withPath: "messages")
+        
+        if(self.viewingCondition == 0){
             viewDriverProfileButton.isHidden = false
             matchTripButton.isHidden = false
             
             showInfo()
         }
         
-        if(viewingCondition == 1){
+        if(self.viewingCondition == 1){
             //view from myTrips->post
             viewRequestersButton.isHidden = false
+            if (self.myTrip.riderID != ""){
+            
+                viewDriverProfileButton.setTitle("View your rider's profile", for: .normal)
+                viewDriverProfileButton.isHidden = false
+                viewRequestersButton.isHidden = true
+            }
+            
             showInfo()
             
             //TO DO
         }
-        if(viewingCondition == 2){
+        if(self.viewingCondition == 2){
             //view from myTrips->requests
             //TO DO
             showInfo()
@@ -96,14 +107,63 @@ class TripDetailViewController: UIViewController {
         self.info.text = "Waiting......"
         
         
-        self.info.text = "From " + tempTrip.from + " To " + tempTrip.to + "\n"
-            + "On " + tempTrip.date + "\n"
-            + tempTrip.seats + " seats available\n"
-            + "Price: " + tempTrip.price + "\n"
-            + "Pick Up Info: " + tempTrip.pickUp + "\n"
-            + "Driver's notes: " + tempTrip.notes + "\n"
+        self.info.text = "From " + self.myTrip.from + " To " + self.myTrip.to + "\n"
+            + "On " + self.myTrip.date + "\n"
+            + self.myTrip.seats + " seats available\n"
+            + "Price: " + self.myTrip.price + "\n"
+            + "Pick Up Info: " + self.myTrip.pickUp + "\n"
+            + "Driver's notes: " + self.myTrip.notes + "\n"
+        if (self.viewingCondition == 1) {
+            if (self.myTrip.riderID == "") {
+                self.info.text! += "No selected Rider.\n"
+            }
+            else {
+                self.info.text! += "You have selected a Rider.\n"
+            }
+        }
+        else if (self.viewingCondition == 2) {
+            let userID = (FIRAuth.auth()?.currentUser?.uid)! as String
+            if (self.myTrip.riderID == "") {
+                self.info.text! += "The driver has not chosen a rider.\n"
+            }
+            else if (userID == self.myTrip.riderID){
+                self.info.text! += "The driver has chosen you as the rider!\n"
+            }
+            else {
+                self.info.text! += "The driver has chosen someone else as the rider QAQ\n"
+            }
+
+        }
         self.view.setNeedsDisplay()
     }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let temp = segue.identifier
+        print(temp)
+        if(segue.identifier == "TripDetail2Profile") {
+            if let destination = segue.destination as? DriverProfileViewController {
+            
+                destination.myProfile = self.driverProfile
+                destination.driverFlag = true
+                destination.trip = self.myTrip
+                print(1)
+            }
+        }
+        if (segue.identifier == "TripDetail2Requesters") {
+            if let destination = segue.destination as? RequestersTableViewController {
+                destination.trip = self.myTrip
+                print(1)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
     /*
@@ -122,44 +182,50 @@ class TripDetailViewController: UIViewController {
         
         var reqList = ""
         let userID = FIRAuth.auth()?.currentUser?.uid
-        ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
+        ref.child("posts").child(self.myTrip.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            reqList = value?["requestList"] as! String
-            //            print("in database postlist is " + postList)
             reqList = reqList + userID! + ","
-            //            print("after postlist is " + postList)
             var path = "messages/" + userID! + "/myPostsList"
-            self.ref.child("posts").child(tripViewing.tripID).child("requestList").setValue(reqList)
+            self.ref.child("posts").child(self.myTrip.tripID).child("requestList").setValue(reqList)
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+        self.userRef.child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            reqList = value?["myRequestsList"] as! String
+            reqList = reqList + self.myTrip.tripID + ","
+            self.userRef.child(userID!).child("myRequestsList").setValue(reqList)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
         
         
         
         
         let alert = UIAlertController(title: "Thank You",
                                       message: "Sent request to driver successfully!", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Awesome", style: .default, handler: {(alert: UIAlertAction!) in self.showNextView()})
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
         
         //TO DO: send the request to driver
     }
     
-    @IBAction func viewRequesters(_ sender: AnyObject) {
-        self.ref = FIRDatabase.database().reference(withPath: "messages")
-        
-        var requesterList = ""
-        ref.child("posts").child(tripViewing.tripID).observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            requesterList = value?["requestList"] as! String
-        }) { (error) in
-            print(error.localizedDescription)
-        }
+    func showNextView()
+    {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
 
-        requesterArr = requesterList.components(separatedBy: ",")
+    
+    @IBAction func viewDriver(_ sender: AnyObject) {
+        
+
+    }
+    @IBAction func viewRequesters(_ sender: AnyObject) {
+        
+
     }
     
 }

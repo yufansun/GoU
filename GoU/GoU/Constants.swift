@@ -39,6 +39,13 @@ struct Constants {
         static let isDriver = "isDriver"
         static let myPostsList =  "myPostsList"
         static let myRequestsList = "myRequestsList"
+        static let hasProfilePhoto = "hasProfilePhoto"
+        static let profilePhotoURL = "profilePhotoURL"
+    }
+    
+    struct DriverProfileFields {
+        static let vehicleModel = "vehicleModel"
+        static let vehicleYear = "vehicleYear"
     }
     
     struct MessageFields {

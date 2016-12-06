@@ -20,21 +20,23 @@ struct Trip {
     var notes: String
     var price: String
     var pickUp: String
+    var riderID: String
+
     
-    
-    
-    init(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String) {
-        self.from = from
-        self.to = to
-        self.date = date
-        self.seats = seats
-        self.ownerID = ownerID
-        self.tripID = tripID
-        self.notes = notes
-        self.pickUp = pickUp
-        self.price = price
+    init() {
+        self.from = ""
+        self.to = ""
+        self.date = ""
+        self.seats = ""
+        self.ownerID = ""
+        self.tripID = ""
+        self.notes = ""
+        self.pickUp = ""
+        self.price = ""
+        self.riderID = ""
     }
-    mutating func setNew(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String) {
+    
+    init(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String, riderID: String) {
         self.from = from
         self.to = to
         self.date = date
@@ -44,25 +46,42 @@ struct Trip {
         self.notes = notes
         self.pickUp = pickUp
         self.price = price
+        self.riderID = riderID
+    }
+    mutating func setNew(from: String, to: String, date: String, seats: String, ownerID: String, tripID: String,notes: String, price: String, pickUp: String, riderID: String) {
+        self.from = from
+        self.to = to
+        self.date = date
+        self.seats = seats
+        self.ownerID = ownerID
+        self.tripID = tripID
+        self.notes = notes
+        self.pickUp = pickUp
+        self.price = price
+        self.riderID = riderID
     }
 }
 
-var trip = Trip(from: "Your location",to: "Destination",date: "00/00/0000",seats: "0", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
-
-var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "")
-
-var currentProfile = [:] as NSDictionary
+//var trip = Trip(from: "Your location",to: "Destination",date: "00/00/0000",seats: "0", ownerID: "", tripID: "",notes: "", price: "", pickUp: "", riderID: "")
+//
+//var tripViewing = Trip(from: "Ann Arbor",to: "Chicago",date: "10/18/2016",seats: "3", ownerID: "", tripID: "",notes: "", price: "", pickUp: "", riderID: "")
+//
+//var currentProfile = [:] as NSDictionary
 
 var viewingCondition = 0
 //0 : view trip detail from posts
 //1 : view trip detail from myTrips->posts
 //2 : view trip detail from myTrips->requests
 
+var myTripsBadgeCount = 0
 
-var trips = [Trip]()
-var myTrips = [Trip]()
-var myRequests = [Trip]()
-var requesterArr = [String]()
+
+//var trips = [Trip]()
+//var myTrips = [Trip]()
+//var myRequests = [Trip]()
+//var requesterArr = [String]()
+//var requesters = [DriverViewProfile]()
+
 
 struct Location {
     //TODO: make it a enum for location
@@ -140,27 +159,40 @@ struct DriverViewProfile {
     var email: String
     var phone: String
     var aboutme: String
+    var userID: String
     
-    init(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String) {
-        self.name = name
-        self.gender = gender
-        self.loc = loc
-        self.email = email
-        self.phone = phone
-        self.aboutme = aboutme
+    init() {
+        self.name = ""
+        self.gender = ""
+        self.loc = ""
+        self.email = ""
+        self.phone = ""
+        self.aboutme = ""
+        self.userID = ""
     }
-    mutating func setNew(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String) {
+    
+    init(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String, userID: String) {
         self.name = name
         self.gender = gender
         self.loc = loc
         self.email = email
         self.phone = phone
         self.aboutme = aboutme
+        self.userID = userID
+    }
+    mutating func setNew(name: String, gender: String, loc: String, email: String, phone: String, aboutme: String, userID: String) {
+        self.name = name
+        self.gender = gender
+        self.loc = loc
+        self.email = email
+        self.phone = phone
+        self.aboutme = aboutme
+        self.userID = userID
         
     }
 }
 
-var driverInfo =  DriverViewProfile(name: "", gender: "", loc: "", email: "", phone: "", aboutme: "")
+var driverInfo =  DriverViewProfile(name: "", gender: "", loc: "", email: "", phone: "", aboutme: "", userID: "")
 var myPostList = ""
 
 struct CommonProfile {

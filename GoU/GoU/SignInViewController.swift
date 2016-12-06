@@ -47,12 +47,22 @@ class SignInViewController: UIViewController {
                 return
             }
             self.signedIn(user!)
+            // no email verification in this release
+//            if (!(FIRAuth.auth()?.currentUser?.isEmailVerified)!) {
+//                self.showAlert(message: "Verify your email first!")
+//                do {
+//                    try FIRAuth.auth()?.signOut()
+//                    AppState.sharedInstance.signedIn = false
+//                } catch let signOutError as NSError {
+//                    print ("Error signing out: \(signOutError.localizedDescription)")
+//                }
+//            }
         }
     }
     
     func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
-       // let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        // let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailRegEx = "[A-Z0-9a-z._%+-]+@umich.edu"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
@@ -62,11 +72,13 @@ class SignInViewController: UIViewController {
     @IBAction func didTapSignUp(_ sender: AnyObject) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         
+        // don't limit to umich students in this release
         // check the email ends with umich.edu
-        if(!isValidEmail(testStr: emailField.text!)) {
-            self.showAlert(message: "Please use your umich email address")
-            return
-        }
+//        if(!isValidEmail(testStr: emailField.text!)) {
+//            self.showAlert(message: "Please use your umich email address")
+//            return
+//        }
+        
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {
@@ -74,18 +86,65 @@ class SignInViewController: UIViewController {
                 print(error.localizedDescription)
                 return
             }
-            self.setDisplayName(user!)
             
-            //create initial profile
-            self.uid = user!.uid
-            self.configureDatabase()
-            self.configureStorage()
-            var data = [Constants.CommonProfileFields.userId: user!.uid]
-            data[Constants.CommonProfileFields.saved] = "FALSE"
-            data[Constants.CommonProfileFields.myPostsList] = ""
-            data[Constants.CommonProfileFields.myRequestsList] = ""
-            self.sendMessage(withData: data)
+            
+            // no email verification in this release
+//            //send email verification
+//            self.sendEmailVerification(withCompletionCallback: { (error) in
+//                if error != nil{
+//                    print(error!)
+//                }
+//                else{
+//                    //verification email sent
+//                    self.showAlert(message: "We just sent a verification email to you. Please go and verify!")
+//                }
+//            })
+//            
+//            
+//            let prompt = UIAlertController.init(title: nil, message: "We just sent a verification email to you. Please go and verify!", preferredStyle: .alert)
+//            let okAction = UIAlertAction.init(title: "I have verified", style: .default) { (action) in
+//                print (FIRAuth.auth()?.currentUser?.isEmailVerified)
+            
+                self.setDisplayName(user!)
+                
+                //create initial profile
+                self.uid = user!.uid
+                self.configureDatabase()
+                self.configureStorage()
+                var data = [Constants.CommonProfileFields.userId: user!.uid]
+                data[Constants.CommonProfileFields.saved] = "FALSE"
+                data[Constants.CommonProfileFields.myPostsList] = ""
+                data[Constants.CommonProfileFields.myRequestsList] = ""
+                self.sendMessage(withData: data)
+                
+                var dataPhoto = [Constants.CommonProfileFields.userId: user!.uid]
+                dataPhoto[Constants.CommonProfileFields.hasProfilePhoto] = "FALSE"
+                self.updateProfilePhoto(withData: dataPhoto)
+                
+//                if (FIRAuth.auth()?.currentUser?.isEmailVerified)! {
+//                    // verified
+//                } else {
+//                    self.showAlert(message: "Ooops, seem that you didn't verify")
+//                    do {
+//                        try FIRAuth.auth()?.signOut()
+//                        AppState.sharedInstance.signedIn = false
+//                    } catch let signOutError as NSError {
+//                        print ("Error signing out: \(signOutError.localizedDescription)")
+//                    }
+//                    
+//                }
+//                
+//            }
+//            prompt.addAction(okAction)
+//            self.present(prompt, animated: true, completion: nil);
+            
+            
+            
         }
+    }
+    
+    func sendEmailVerification(withCompletionCallback callback: @escaping FIRSendEmailVerificationCallback){
+        FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: callback)
     }
     
     func configureDatabase() {
@@ -100,6 +159,12 @@ class SignInViewController: UIViewController {
         var mdata = data
         // Push data to Firebase Database
         self.ref.child("commonProfiles").child(uid).setValue(mdata)
+    }
+    
+    func updateProfilePhoto(withData data: [String: String]) {
+        var mdata = data
+        // Push data to Firebase Database
+        self.ref.child("commonProfiles").child("profilePhoto").child(uid).setValue(mdata)
     }
     
     func setDisplayName(_ user: FIRUser) {
@@ -152,4 +217,3 @@ class SignInViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 }
-
